@@ -1,0 +1,109 @@
+﻿<nav class="menuRech" ng-class="{actived:showBtnSave}">
+    <div style="width:20%; height:inherit; float:left; background: rgba(0,0,0,.3);" ng-click="ShowHideSave()">
+
+    </div>
+    <div style="width:80%; height:inherit; background-color:white; float:right; padding:20px">
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" id="titre" placeholder="Titre">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="motCle" placeholder="Mot(s) clé(s)">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked="checked"> Inclure la description dans la recherche
+                </label>
+            </div>
+            <div class="btn-group fastDropDown" style="margin-bottom:20px; margin-top:0px; padding-top:0px">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span style="float:left">Région</span>   <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href>Action</a></li>
+                    <li><a href>Another action</a></li>
+                    <li><a href>Something else here</a></li>
+                    <li><a href>Separated link</a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="ville" placeholder="Villes ou codes postaux">
+            </div>
+            <div class="btn-group fastDropDown" style="margin-bottom:20px; margin-top:0px; padding-top:0px">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span style="float:left">Catégorie</span>   <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href>Action</a></li>
+                    <li><a href>Another action</a></li>
+                    <li><a href>Something else here</a></li>
+                    <li><a href>Separated link</a></li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> Particulier
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox2" value="option2"> Professionnel
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked="checked"> Annonces urgentes uniquement
+                </label>
+            </div>
+            <button type="submit" class="btn btn-warning btn-lg btn-block" style="margin-left:auto; margin-right:auto">Rechercher</button>
+        </form>
+    </div>
+</nav>
+<div class="headPanel" style="position:fixed;z-index:35">
+    <div class="contentPanel">
+        <div class="leftPanel">
+            <a onclick="AfficheMenu()">
+                <img src="images/ic_action_storage.png" />
+            </a>
+
+        </div>
+        <div class="centerPanel">
+            Recherches
+        </div>
+        <div class="rightPanel">
+            <ul>
+                <li ng-show="showBtnSave">
+                    <a ng-click="ShowHideSave()" class="btnMenu">
+                        <img src="images/ic_action_save.png" />
+                    </a>
+                </li>
+                <li ng-show="showBtnAdd">
+                    <a ng-click="ShowHideSave()" class="btnMenu">
+                        <img src="images/ic_action_new.png" />
+                    </a>
+                </li>
+                <li ng-show="showBtnDelete">
+                    <a class="btnMenu">
+                        <img src="images/ic_action_discard.png" />
+                    </a>
+                </li>
+                <li ng-show="showBtnEdit">
+                    <a class="btnMenu">
+                        <img src="images/ic_action_edit.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="listAnnonce">
+    <ul>
+        <!--TODO : ngRepeat-->
+        <li ng-repeat="rech in recherches">
+            <div style="width:90%; float:left" ng-click="ShowResultatRecherche(rech)">
+                <h4>{{rech.titre}}</h4>
+            </div>
+            <div style="width:10%; float:right">
+                <input type="checkbox" ng-click="SelectRech($event)" style="width:24px;height:24px;float:right" />
+            </div>
+        </li>
+    </ul>
+</div>

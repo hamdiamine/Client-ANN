@@ -1,0 +1,51 @@
+﻿<div class="headPanel" style="position:fixed;z-index:35">
+    <div class="contentPanel">
+        <div class="leftPanel">
+            <a onclick="AfficheMenu()">
+                <img src="images/ic_action_storage.png" />
+            </a>
+        </div>
+        <div class="centerPanel">
+            Envoie mail
+        </div>
+        <div class="rightPanel">
+            <ul>
+                <li>
+                    <a href="#/detailAnnonce" class="btnMenu">
+                        <img src="images/ic_action_send_now.png" />
+                    </a>
+                </li>
+                <li>
+                    <a href="#/detailAnnonce">
+                        <img src="images/ic_action_previous_item.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="background-color:#F7EEE0; width:100%; height:100%; min-height:100%">
+    <div style="margin-left:30px; margin-right:30px; padding-top:65px">
+        <p>
+            {{adresseMail}}
+        </p>
+        <p>
+            <input type="text" class="form-control" id="nom" placeholder="Votre nom">
+        </p>
+        <p>
+            <input type="email" class="form-control" id="mail" placeholder="Votre adresse mail">
+        </p>
+        <p>
+            <input type="tel" class="form-control" id="tel" placeholder="Votre téléphone (Factultatif)">
+        </p>
+        <p>
+            <label class="checkbox">
+                <input type="checkbox" id="inlineCheckbox3" value="option3"> Recevoir une copie par mail
+            </label>
+        </p>
+        <p>
+            <textarea style="width:100%; height:200px" placeholder="Votre message"></textarea>
+        </p>
+
+    </div>
+</div>

@@ -41,3 +41,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.apk
+bin
+SolutionAnnonces/SolutionAnnonces/bin/Android/Debug/manifest-merger-debug-report.txt
+SolutionAnnonces/SolutionAnnonces/bin/Android/Release/manifest-merger-debug-report.txt
+SolutionAnnonces/SolutionAnnonces/bld/Android/Debug/changeList.json
+SolutionAnnonces/SolutionAnnonces/bin/Android/Release/manifest-merger-release-report.txt
+SolutionAnnonces/SolutionAnnonces/bin/Android/Debug/manifest-merger-release-report.txt

@@ -1,0 +1,141 @@
+﻿<nav class="menuRech" ng-class="{actived:showDialog}" style="background: rgba(0,0,0,.3);z-index:30">
+    <div style="width:100%; height:120px">
+        <div class="dialog">
+            <div class="form-group required">
+                <input type="text" class="form-control" id="titre" placeholder="Saisir le titre" ng-model="Recherche.title" required />
+            </div>
+            <div style="width:150px; margin:25px auto">
+                <button type="button" class="btn btn-default btn-sm" ng-click="ShowHideDialog()">Fermer</button>
+                <button type="button" class="btn btn-warning btn-sm" ng-click="CreateRecherche()">Confirmer</button>
+            </div>
+
+        </div>
+    </div>
+    <div style="height:100%">
+    </div>
+</nav>
+<nav class="menuTrie" ng-class="{actived:ShowMenu}">
+    <ul class="menuUl">
+        <li ng-click="ListSortByPrix()"><a>Trier par prix</a></li>
+        <li ng-click="ListSortByDate()"><a>Trier par date</a></li>
+        <li ng-click="ShowHideDialog()"><a>Sauvegarder la recherche</a></li>
+    </ul>
+</nav>
+<nav class="menuRech" ng-class="{actived:showRech}">
+    <div style="width:20%; height:inherit; float:left; background: rgba(0,0,0,.3);" ng-click="ShowHideRech()">
+
+    </div>
+    <div style="width:80%; height:inherit; background-color:white; float:right; padding:20px">
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" id="motCle" placeholder="Mot(s) clé(s)" ng-model="Recherche.motsCle">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked="checked" ng-model="Recherche.avecDesc"> Inclure la description dans la recherche
+                </label>
+            </div>
+            <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Région</span></span>
+            <div class="chosen-container chosen-container-single" style=" width:100%;" title="">
+                <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')">
+                    <span>{{selectedRegion.label}}</span>
+                    <div>
+                        <b></b>
+                    </div>
+                </a>
+                <div class="chosen-drop" id="listReg">
+                    <div class="chosen-search">
+                        <input type="text" autocomplete="off" class="" ng-model="rechRegion">
+                    </div>
+                    <ul class="chosen-results">
+                        <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}">{{rg.label}}</li>
+                    </ul>
+                </div>
+            </div>
+            <br />
+            <div class="form-group" style="margin-top:20px">
+                <input type="text" class="form-control" id="ville" placeholder="Villes ou codes postaux">
+            </div>
+            <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
+            <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
+                <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')">
+                    <span>{{selectedCategorie.label}}</span>
+                    <div>
+                        <b></b>
+                    </div>
+                </a>
+                <div class="chosen-drop" id="listCat">
+                    <div class="chosen-search">
+                        <input type="text" autocomplete="off" class="" ng-model="rechCategorie">
+                    </div>
+                    <ul class="chosen-results">
+                        <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}">{{ct.label}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox1" value="option1"> Particulier
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="inlineCheckbox2" value="option2"> Professionnel
+                </label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" checked="checked"> Annonces urgentes uniquement
+                </label>
+            </div>
+            <button class="btn btn-warning btn-lg btn-block" style="margin-left:auto; margin-right:auto">Rechercher</button>
+        </form>
+    </div>
+</nav>
+<div class="headPanel" style="position:fixed;z-index:35">
+    <div class="contentPanel">
+        <div class="leftPanel">
+            <a onclick="AfficheMenu()">
+                <img src="images/ic_action_storage.png" />
+            </a>
+
+        </div>
+        <div class="centerPanel">
+            Offres
+        </div>
+        <div class="rightPanel">
+            <ul>
+                <li ng-show="!showBtn">
+                    <a class="btnMenu" ng-click="ShowHideDialog()">
+                        <img src="images/ic_action_save.png" />
+                    </a>
+                </li>
+                <li ng-show="showBtn">
+                    <a ng-click="ShowHideMenu()" class="btnMenu">
+                        <img src="images/ic_action_overflow.png" />
+                    </a>
+                </li>
+                <li ng-show="showBtn" id="c-button--slide-right">
+                    <a ng-click="ShowHideRech()" class="btnMenu">
+                        <img src="images/ic_action_search.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="listAnnonce">
+    <ul>
+        <li ng-repeat="ofr in listOfrP">
+            <div style="width:90%; float:left" ng-click="showDetails(ofr)">
+                <img src="{{ofr.imagePrincipal}}">
+                <h5>{{ofr.titre}}</h5>
+                <span class="prix">{{ofr.prix + devise}} </span>
+                <p>{{ofr.categorie.label}}</p>
+                <p>{{ofr.ville.label}}</p>
+                <p>{{ofr.dateAff}}</p>
+            </div>
+            <div style="width:10%; float:right">
+                <img onclick="favorisimage(this)" src="images/jaimepas.png" style="width:24px;height:24px;float:right" />
+            </div>
+        </li>
+    </ul>
+</div>

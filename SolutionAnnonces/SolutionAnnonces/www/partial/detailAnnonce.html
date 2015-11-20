@@ -1,0 +1,157 @@
+﻿<nav class="menuRech" ng-class="{actived:showDialog}" style="background: rgba(0,0,0,.3)">
+    <div style="width:100%; height:100px">
+        <div class="dialog">
+            <h6>Voulez vous supprimer cette annonce</h6>
+            <div style="width:150px; margin:25px auto">
+                <button type="button" class="btn btn-default btn-sm" ng-click="ShowHideDialog()">Fermer</button>
+                <button type="button" class="btn btn-warning btn-sm" ng-click="DeleteAnnonce()">Confirmer</button>
+            </div>
+
+        </div>
+    </div>
+    <div style="height:100%">
+    </div>
+</nav>
+<nav class="menuTrie" ng-class="{actived:showMenu}" style="height:200px">
+    <ul class="menuUl">
+        <li><a>Ajouter contact</a></li>
+        <li><a>Modifier</a></li>
+        <li><a ng-click="ShowHideDialog()">Supprimer</a></li>
+        <li><a href="#/abus">Signaler</a></li>
+    </ul>
+</nav>
+<div class="detailsAnn">
+    <div class="headPanel" style="position:fixed;z-index:35">
+        <div class="contentPanel">
+            <div class="leftPanel">
+                <a onclick="AfficheMenu()">
+                    <img src="images/ic_action_storage.png" />
+                </a>
+
+            </div>
+            <div class="centerPanel">
+                Détails annonce
+            </div>
+            <div class="rightPanel">
+                <ul>
+                    <li>
+                        <a class="btnMenu" ng-click="ShowHideMenu()">
+                            <img src="images/ic_action_overflow.png" />
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="detailsAnnonce">
+        <div id="myCarousel" class="carousel">
+            <ol class="carousel-indicators">
+                <!--TODO : ngRepeat-->
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <!--TODO : ngRepeat-->
+                <div class="item active">
+                    <img style="width:100%; height:200px" src="http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$" class="img-responsive" style="margin-left:auto; margin-right:auto" />
+                </div>
+                <div class="item">
+                    <img style="width:100%; height:200px" src="http://lovezphone.e-monsite.com/medias/images/sell-galaxy-s3.jpg" class="img-responsive" style="margin-left:auto; margin-right:auto" />
+                </div>
+                <div class="item">
+                    <img style="width:100%; height:200px" src="http://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/postimages/276955/s3-neo-plus.jpg" class="img-responsive" style="margin-left:auto; margin-right:auto" />
+                </div>
+            </div>
+            <a class="carousel-control left" onclick="previousImg()">
+                <span class="icon-prev"></span>
+            </a>
+            <a class="carousel-control right" onclick="nextImg()">
+                <span class="icon-next"></span>
+            </a>
+        </div>
+        <div class="coreDetails">
+            <span style="color:#959595; font-weight:bold; font-size:12px">{{selectedAnnonce.categorie.label}}</span>
+            <div class="row">
+                <div class="col-xs-8">
+                    <h4 style="margin-top:0px; margin-bottom:0px; font-weight:bold">{{selectedAnnonce.titre}}</h4>
+                    <span style="color:#959595; font-weight:lighter; font-size:10px">{{selectedAnnonce.dateAff}}</span>
+                </div>
+                <div class="col-xs-4">
+                    <span class="label label-warning" style="font-weight:bold; font-size:18px; float:right">{{selectedAnnonce.prix}}</span>
+                </div>
+            </div>
+            <p style="margin-top:5px; font:900 12px 'Courier New', Courier, monospace;">
+                {{selectedAnnonce.description}}
+            </p>
+            <div style="width:inherit; height:125px"></div>
+            <p style="margin-bottom:2px">
+                <span class="label label-default" style="font-size:12px">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true">
+                        <span style="margin-left:5px">
+                            {{selectedAnnonce.pseudo}}
+                        </span>
+                    </span>
+                </span>
+            </p>
+            <p style="margin-bottom:2px">
+                <span class="label label-default" style="font-size:12px">
+                    <span class="glyphicon glyphicon-earphone" aria-hidden="true">
+                        <span style="margin-left:5px">
+                            {{selectedAnnonce.numTel}}
+                        </span>
+                    </span>
+                </span>
+            </p>
+            <p style="margin-bottom:2px">
+                <span class="label label-default" style="font-size:12px">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true">
+                        <span style="margin-left:5px">
+                            {{selectedAnnonce.email}}
+                        </span>
+                    </span>
+                </span>
+            </p>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </div>
+    </div>
+    <div class="footerPanel" style="position:fixed;z-index:35;bottom:0px">
+        <div style="width:100%; padding-top:5px">
+            <center>
+                <div style="width:20%; float:left">
+                    <a href="#/mail">
+                        <img src="images/ic_action_new_email.png" />
+                    </a>
+                </div>
+
+                <div style="width:20%; float:left">
+                    <a style="float:none" ng-click="Call({{selectedAnnonce.numTel}})">
+                        <img src="images/ic_action_call.png" />
+                    </a>
+                </div>
+
+                <div style="width:20%; float:left">
+                    <a style="float:none">
+                        <img onclick="favorisimage(this)" src="images/jaimepas.png" />
+                    </a>
+                </div>
+
+                <div style="width:20%; float:left">
+                    <a style="float:none" ng-click="Share('Vente google', 'Vente', 'https://www.google.nl/images/srpr/logo4w.png')">
+                        <img src="images/ic_action_share.png" />
+                    </a>
+                </div>
+
+                <div style="width:20%; float:right">
+                    <a style="float:none" href="#/abus">
+                        <img src="images/ic_action_error.png" />
+                    </a>
+                </div>
+            </center>
+        </div>
+    </div>
+</div>

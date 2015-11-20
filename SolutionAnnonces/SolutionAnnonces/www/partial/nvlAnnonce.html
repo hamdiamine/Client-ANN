@@ -1,0 +1,152 @@
+﻿<form id="formNvlAnnonce" ng-submit="createAnnonce()">
+    <div class="nvlAnn">
+        <div class="headPanel headnvl">
+            <div class="contentPanel">
+                <div class="leftPanel">
+                    <a onclick="AfficheMenu()">
+                        <img src="images/ic_action_storage.png" />
+                    </a>
+
+                </div>
+                <div class="centerPanel">
+                    Nouvelle annonce
+                </div>
+                <div class="rightPanel">
+
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="separateur"></div>
+            <h4><span class="label label-warning">Information annonce</span></h4>
+            <div class="sousgrpInfo">
+                <div class="form-group required">
+                    <label class="radio-inline">
+                        <input type="radio" name="typeRadios" id="typeRadios0" value="0" checked ng-model="nouvelAnnonce.type" required>
+                        Offre
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="typeRadios" id="typeRadios1" value="1" ng-model="nouvelAnnonce.type" required>
+                        demande
+                    </label>
+                </div>
+                <div class="form-group">
+                    <span class="glyphicon glyphicon-picture iconTitre" aria-hidden="true"><span class="titre">Images</span></span>
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
+                    <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
+                        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')">
+                            <span>{{selectedCategorie.label}}</span>
+                            <input value="{{selectedCategorie.label}}" required style="display:none" />
+                            <div>
+                                <b></b>
+                            </div>
+                        </a>
+                        <div class="chosen-drop" id="listCat">
+                            <div class="chosen-search">
+                                <input type="text" autocomplete="off" class="" ng-model="rechCategorie">
+                            </div>
+                            <ul class="chosen-results">
+                                <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}">{{ct.label}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-edit iconTitre" aria-hidden="true"><span class="titre">Titre</span></span>
+                    <input type="text" class="form-control espace" id="titre" placeholder="......" ng-model="nouvelAnnonce.titre" required />
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-list-alt iconTitre" aria-hidden="true"><span class="titre">Description</span></span>
+                    <textarea class="form-control espace" id="description" placeholder="......" ng-model="nouvelAnnonce.description" required />
+                </div>
+                <div class="form-group required" style="display:none">
+                    <span class="glyphicon glyphicon-calendar iconTitre" aria-hidden="true"><span class="titre">Date</span></span>
+                    <input class="form-control espace" disabled="disabled" ng-model="nouvelAnnonce.dateDepose" value="{{date | date:'dd-MM-yyyy hh:m'}}" />
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-euro iconTitre" aria-hidden="true"><span class="titre">Prix</span></span>
+                    <input type="number" class="form-control espace" id="prix" placeholder="......" ng-model="nouvelAnnonce.prix" required />
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-screenshot iconTitre" aria-hidden="true"><span class="titre">Ville</span></span>
+                    <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
+                        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listVil')">
+                            <span>{{selectedVille.label}}</span>
+                            <input value="{{selectedVille.label}}" required style="display:none" />
+                            <div>
+                                <b></b>
+                            </div>
+                        </a>
+                        <div class="chosen-drop" id="listVil">
+                            <div class="chosen-search">
+                                <input type="text" autocomplete="off" class="" ng-model="rechVille">
+                            </div>
+                            <ul class="chosen-results">
+                                <li ng-repeat="vl in villes | filter:rechVille" ng-click="setVille(vl)" class="active-result" data-option-array-index="{{vl.id}}">{{vl.label}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="separateur2"></div>
+            <h4><span class="label label-warning">Information annonceur</span></h4>
+            <div class="sousgrpInfo">
+                <div class="form-group required">
+                    <label class="radio-inline">
+                        >
+
+                        <input type="radio" name="classRadios" id="classRadios0" value="0" checked ng-model="nouvelAnnonce.classement" required>
+                        Particulier
+                    </label>
+
+                    <label class="radio-inline">
+                        <input type="radio" name="classRadios" id="classRadios1" value="1" ng-model="nouvelAnnonce.classement" required>
+                        Professionnel
+                    </label>
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-user iconTitre" aria-hidden="true"><span class="titre">Pseudo</span></span>
+                    <input type="text" class="form-control espace" id="pseudo" placeholder="......" ng-model="nouvelAnnonce.pseudo" required />
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-envelope iconTitre" aria-hidden="true"><span class="titre">E-mail</span></span>
+                    <input type="email" class="form-control espace" id="mail" placeholder="......" ng-model="nouvelAnnonce.email" required />
+                </div>
+                <div class="form-group required">
+                    <span class="glyphicon glyphicon-phone-alt iconTitre" aria-hidden="true"><span class="titre">Téléphone</span></span>
+                    <input type="tel" class="form-control espace" id="tel" placeholder="......" ng-model="nouvelAnnonce.numTel" required />
+                </div>
+                <div class="form-group required">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" ng-model="nouvelAnnonce.estUrgent">
+                            Urgent
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" ng-model="nouvelAnnonce.masqueNum">
+                            Masquer le numéro de téléphone
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="" ng-model="nouvelAnnonce.avecDem">
+                            réfuser tout démarcharge commercial
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+        <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+    </center>
+
+</form>

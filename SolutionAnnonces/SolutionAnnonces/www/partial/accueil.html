@@ -1,0 +1,51 @@
+﻿<div class="headPanel">
+    <div class="contentPanel">
+        <div class="leftPanel">
+            <a onclick="AfficheMenu()">
+                <img src="images/ic_action_storage.png" />
+            </a>
+
+        </div>
+        <div class="centerPanel">
+            Accueil
+        </div>
+        <div class="rightPanel">
+            <ul>
+                <li>
+                    <a href="#/nvlAnnonce" class="btnMenu">
+                        <img src="images/ic_action_new_event.png" />
+                    </a>
+                </li>
+                <li>
+                    <a class="btnMenu">
+                        <img src="images/ic_action_location_found.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div style="margin:0 auto;width: 60%;" class="fastDropDown">
+    <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Région</span></span>
+    <div class="chosen-container chosen-container-single" style=" width:100%;" title="" >
+        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')">
+            <span>{{selectedRegion.label}}</span>
+            <div>
+                <b></b>
+            </div>
+        </a>
+        <div class="chosen-drop" id="listReg">
+            <div class="chosen-search">
+                <input type="text" autocomplete="off" class="" ng-model="rechRegion">
+            </div>
+            <ul class="chosen-results">
+                <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}">{{rg.label}}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<center>
+    <div class="map"></div>
+</center>
+

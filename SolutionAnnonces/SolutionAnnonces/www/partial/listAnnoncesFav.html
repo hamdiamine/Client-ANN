@@ -1,0 +1,60 @@
+﻿<div class="headPanel" style="position:fixed;z-index:35">
+    <div class="contentPanel">
+        <div class="leftPanel">
+            <a onclick="AfficheMenu()">
+                <img src="images/ic_action_storage.png" />
+            </a>
+
+        </div>
+        <div class="centerPanel">
+            Favoris
+        </div>
+        <div class="rightPanel">
+
+        </div>
+    </div>
+</div>
+<div class="listAnnonce">
+    <ul>
+        <!--TODO : ngRepeat-->
+        <li>
+            <div style="width:90%; float:left" ng-click="showDetails()">
+                <img src="http://lorempixum.com/100/100/nature/1">
+                <h5>Headline Headline Headline Headline Headline Headli</h5>
+                <span class="prix">140 €</span>
+                <p>Matériels informatique</p>
+                <p>Paris</p>
+                <p>Aujourd'hui</p>
+            </div>
+            <div style="width:10%; float:right">
+                <img onclick="favorisimage(this)" src="images/jaimepas.png" style="width:24px;height:24px;float:right" />
+            </div>
+        </li>
+        <li>
+            <div style="width:90%; float:left" ng-click="showDetails()">
+                <img src="http://lorempixum.com/100/100/nature/2">
+                <h5>Headline Headline Headline Headline Headline Headli</h5>
+                <span class="prix">140 €</span>
+                <p>Matériels informatique</p>
+                <p>Paris</p>
+                <p>Aujourd'hui</p>
+            </div>
+            <div style="width:10%; float:right">
+                <img onclick="favorisimage(this)" src="images/jaime.png" style="width:24px;height:24px;float:right" />
+            </div>
+        </li>
+        <li>
+            <div style="width:90%; float:left" ng-click="showDetails()">
+                <img src="http://lorempixum.com/100/100/nature/3">
+                <h5>Headline Headline Headline Headline Headline Headli</h5>
+                <span class="prix">140 €</span>
+                <p>Matériels informatique</p>
+                <p>Paris</p>
+                <p>Aujourd'hui</p>
+            </div>
+            <div style="width:10%; float:right">
+                <img onclick="favorisimage(this)" src="images/jaime.png" style="width:24px;height:24px;float:right" />
+            </div>
+        </li>
+    </ul>
+</div>
