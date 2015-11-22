@@ -1,6 +1,7 @@
 ﻿app.factory('RechercheFctr', function ($http, $q) {
     var factory = {
         recherches: [],
+        recherchesASup:[],
         selectedRecherche: null,
 
         /* Recuperation de la liste des recherches selon compte*/
@@ -45,6 +46,23 @@
             var url = urlService + "/recherche/delete";
             var config = {
                 params: { id: id }
+            };
+            var deferred = $q.defer();
+            $http.delete(url, config)
+                .success(function (data, status) {
+                    deferred.resolve(data);
+                }).error(function (error, status) {
+                    deferred.reject(_err_delrech);
+                });
+            return deferred.promise;
+        },
+        /*************************************************************************/
+
+        /*Suppression des recherches en lot*/
+        DeleteEnLot: function () {
+            var url = urlService + "/recherche/deleteenlot";
+            var config = {
+                params: { recherches: factory.recherchesASup }
             };
             var deferred = $q.defer();
             $http.delete(url, config)

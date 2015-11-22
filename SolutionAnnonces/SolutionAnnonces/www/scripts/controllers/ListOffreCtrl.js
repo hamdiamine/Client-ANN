@@ -112,6 +112,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         else {
             if ($scope.Recherche.compte === null) {
                 RechercheFctr.recherches.push($scope.Recherche);
+                toastr.success(_suc_opesuc);
+                $scope.showDialog = false;
+                $scope.ShowHideRech();
             }
             else {
                 RechercheFctr.Create($scope.Recherche).then(function (recherche) {
@@ -119,12 +122,13 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
                     RechercheFctr.recherche = recherche;
                     toastr.success(_suc_opesuc);
                     $scope.showDialog = false;
+                    $scope.ShowHideRech();
                 }, function (msg) {
                     toastr.error(msg, 'Erreur');
                 });
             }
-
-        };
+            $scope.Recherche = { 'title': "", 'compte': CompteFctr.compte };
+        }
     };
     /*************************************************************************/
 

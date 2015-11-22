@@ -5,40 +5,53 @@
     <div style="width:80%; height:inherit; background-color:white; float:right; padding:20px">
         <form>
             <div class="form-group">
-                <input type="text" class="form-control" id="titre" placeholder="Titre">
+                <input type="text" class="form-control" id="titre" placeholder="Titre" ng-model="Recherche.title" required>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="motCle" placeholder="Mot(s) clé(s)">
+                <input type="text" class="form-control" id="motCle" placeholder="Mot(s) clé(s)" ng-model="Recherche.motsCle">
             </div>
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" checked="checked"> Inclure la description dans la recherche
+                    <input type="checkbox" checked="checked" ng-model="Recherche.avecDesc"> Inclure la description dans la recherche
                 </label>
             </div>
-            <div class="btn-group fastDropDown" style="margin-bottom:20px; margin-top:0px; padding-top:0px">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span style="float:left">Région</span>   <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href>Action</a></li>
-                    <li><a href>Another action</a></li>
-                    <li><a href>Something else here</a></li>
-                    <li><a href>Separated link</a></li>
-                </ul>
+            <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Région</span></span>
+            <div class="chosen-container chosen-container-single" style=" width:100%;" title="">
+                <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')">
+                    <span>{{selectedRegion.label}}</span>
+                    <div>
+                        <b></b>
+                    </div>
+                </a>
+                <div class="chosen-drop" id="listReg">
+                    <div class="chosen-search">
+                        <input type="text" autocomplete="off" class="" ng-model="rechRegion">
+                    </div>
+                    <ul class="chosen-results">
+                        <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}">{{rg.label}}</li>
+                    </ul>
+                </div>
             </div>
-            <div class="form-group">
+            <br />
+            <div class="form-group" style="margin-top:20px">
                 <input type="text" class="form-control" id="ville" placeholder="Villes ou codes postaux">
             </div>
-            <div class="btn-group fastDropDown" style="margin-bottom:20px; margin-top:0px; padding-top:0px">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span style="float:left">Catégorie</span>   <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href>Action</a></li>
-                    <li><a href>Another action</a></li>
-                    <li><a href>Something else here</a></li>
-                    <li><a href>Separated link</a></li>
-                </ul>
+            <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
+            <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
+                <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')">
+                    <span>{{selectedCategorie.label}}</span>
+                    <div>
+                        <b></b>
+                    </div>
+                </a>
+                <div class="chosen-drop" id="listCat">
+                    <div class="chosen-search">
+                        <input type="text" autocomplete="off" class="" ng-model="rechCategorie">
+                    </div>
+                    <ul class="chosen-results">
+                        <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}">{{ct.label}}</li>
+                    </ul>
+                </div>
             </div>
             <div class="form-group">
                 <label class="checkbox-inline">
@@ -53,7 +66,6 @@
                     <input type="checkbox" checked="checked"> Annonces urgentes uniquement
                 </label>
             </div>
-            <button type="submit" class="btn btn-warning btn-lg btn-block" style="margin-left:auto; margin-right:auto">Rechercher</button>
         </form>
     </div>
 </nav>
@@ -71,7 +83,7 @@
         <div class="rightPanel">
             <ul>
                 <li ng-show="showBtnSave">
-                    <a ng-click="ShowHideSave()" class="btnMenu">
+                    <a ng-click="CreateUpdateRech()" class="btnMenu">
                         <img src="images/ic_action_save.png" />
                     </a>
                 </li>
@@ -81,12 +93,12 @@
                     </a>
                 </li>
                 <li ng-show="showBtnDelete">
-                    <a class="btnMenu">
+                    <a class="btnMenu" ng-click="DeleteList()">
                         <img src="images/ic_action_discard.png" />
                     </a>
                 </li>
                 <li ng-show="showBtnEdit">
-                    <a class="btnMenu">
+                    <a class="btnMenu" ng-click="ShowModif()">
                         <img src="images/ic_action_edit.png" />
                     </a>
                 </li>
@@ -99,10 +111,10 @@
         <!--TODO : ngRepeat-->
         <li ng-repeat="rech in recherches">
             <div style="width:90%; float:left" ng-click="ShowResultatRecherche(rech)">
-                <h4>{{rech.titre}}</h4>
+                <h4>{{rech.title}}</h4>
             </div>
             <div style="width:10%; float:right">
-                <input type="checkbox" ng-click="SelectRech($event)" style="width:24px;height:24px;float:right" />
+                <input type="checkbox" ng-click="SelectRech($event, rech)" style="width:24px;height:24px;float:right" />
             </div>
         </li>
     </ul>
