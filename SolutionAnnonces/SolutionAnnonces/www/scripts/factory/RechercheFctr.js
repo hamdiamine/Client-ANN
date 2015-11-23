@@ -1,9 +1,25 @@
 ﻿app.factory('RechercheFctr', function ($http, $q) {
     var factory = {
         recherches: [],
-        recherchesASup:[],
+        recherchesASup: [],
         selectedRecherche: null,
-
+        rechercheVide: {
+            title: "",
+            compte: null,
+            motsCle: "",
+            offre: false,
+            demande: false,
+            avecDesc: false,
+            region: null,
+            categorie: null,
+            ville: null,
+            particulier: false,
+            professionnel: false,
+            urgent: false,
+            rayon: null,
+            laptitude: null,
+            longitude: null
+        },
         /* Recuperation de la liste des recherches selon compte*/
         ListSelonCpt: function (compte) {
             var url = urlService + "/recherche/listcpt";
@@ -25,7 +41,7 @@
         /*Creation de la recherche*/
         Create: function (recherche) {
             if (recherche.compte === null) {
-                
+
             }
             else {
                 var url = urlService + "/recherche/create";

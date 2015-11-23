@@ -2,41 +2,47 @@
     var factory = {
         selectedRegion: {},
         selectedAnnonce: {},
+        selectedRecherche: null,
         sortType: 0,
         /*Liste des offres paginer selon la région*/
         ListoffreP: function (p) {
             var url = null;
             var config = {};
-            if (factory.selectedRegion === null) {
-                url = urlService + "/annonce/allofrp";
+            if (factory.selectedRecherche != null) {
+                url = urlService + "/annonce/researchcrt";
                 config = {
-                    params: { page: p, sort: factory.sortType }
+                    params: {
+                        mCle: factory.selectedRecherche.motsCle,
+                        ofr: factory.selectedRecherche.offre,
+                        dem: factory.selectedRecherche.demande,
+                        aDesc: factory.selectedRecherche.avecDesc,
+                        reg: factory.selectedRecherche.region != null ? factory.selectedRecherche.region.id : null,
+                        cat: factory.selectedRecherche.categorie != null ? factory.selectedRecherche.categorie.id : null,
+                        vil: factory.selectedRecherche.ville != null ? factory.selectedRecherche.ville.id : null,
+                        part: factory.selectedRecherche.particulier,
+                        prof: factory.selectedRecherche.professionnel,
+                        urg: factory.selectedRecherche.urgent,
+                        ray: factory.selectedRecherche.rayon,
+                        lp: factory.selectedRecherche.laptitude,
+                        lg: factory.selectedRecherche.longitude,
+                        page: p,
+                        sort: factory.sortType
+                    }
                 };
             }
-            else {
+            else if (factory.selectedRegion != null) {
                 url = urlService + "/annonce/allofrregp";
                 config = {
                     params: { reg: factory.selectedRegion.id, page: p, sort: factory.sortType }
                 };
             }
+            else {
+                url = urlService + "/annonce/allofrp";
+                config = {
+                    params: { page: p, sort: factory.sortType }
+                };
+            }
 
-            var deferred = $q.defer();
-            $http.get(url, config)
-                .success(function (data, status) {
-                    deferred.resolve(data.content);
-                }).error(function (error, status) {
-                    deferred.reject(_err_listofr);
-                });
-            return deferred.promise;
-        },
-        /***********************************************************************/
-
-        /*Liste selon recherche*/
-        ListSelonRech: function(recherche){
-            var url = urlService + "/annonce/researchcrt";
-            var config = {
-                params: { recherche: recherche }
-            };
             var deferred = $q.defer();
             $http.get(url, config)
                 .success(function (data, status) {

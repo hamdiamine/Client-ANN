@@ -43,8 +43,8 @@ app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, Recherc
     $scope.setRegion = function (region) {
         $scope.selectedRegion = region;
         AnnonceFctr.selectedRegion = region;
+        AnnonceFctr.selectedRecherche = null;
         AnnonceFctr.sortType = 0;
-        
         $scope.changeRoute("#/listOffre");
     };
     /************************************************************************************/

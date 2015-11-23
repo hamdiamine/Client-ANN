@@ -15,6 +15,7 @@ app.controller('NavigationCtrl', function ($scope, AnnonceFctr, toastr) {
     /*Navigation depuis le menu principale et effets visuels*/
     $scope.NavigateTo = function (url) {
         if (url === "#/listOffre") {
+            AnnonceFctr.selectedRecherche = null;
             AnnonceFctr.selectedRegion = null;
             AnnonceFctr.sortType = 0;
         }

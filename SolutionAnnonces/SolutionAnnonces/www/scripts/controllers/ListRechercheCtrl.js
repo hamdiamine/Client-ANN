@@ -1,6 +1,7 @@
 ﻿/*Controlleur de la page Recherche sauvegarder*/
-app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr, CategorieFctr, CompteFctr, toastr) {
-    $scope.Recherche = { 'title': "", 'compte': CompteFctr.compte };
+app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr, CategorieFctr, CompteFctr, AnnonceFctr, toastr) {
+    $scope.Recherche = RechercheFctr.rechercheVide;
+    $scope.Recherche.compte = CompteFctr.compte;
     $scope.recherches = [];
     $scope.rechercheASup = [];
     $scope.compte = CompteFctr.compte;
@@ -100,7 +101,8 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
                     });
                 }
             }
-            $scope.Recherche = { 'title': "", 'compte': CompteFctr.compte };
+            $scope.Recherche = RechercheFctr.rechercheVide;
+            $scope.Recherche.compte = CompteFctr.compte;
             $scope.ShowHideSave();
         };
     };
@@ -144,13 +146,16 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
         else {
             toastr.error(_err_delrech, 'Erreur');
         }
+        $scope.Recherche = RechercheFctr.rechercheVide;
+        $scope.Recherche.compte = CompteFctr.compte;
     };
     /*****************************************************************************************************/
 
     /*Afficher ou masquer les bouton de modification et de supppression selon la selection*/
     $scope.SelectRech = function ($event, recherche) {
         var check = $event.currentTarget;
-        $scope.Recherche = { 'title': "", 'compte': CompteFctr.compte };
+        $scope.Recherche = RechercheFctr.rechercheVide;
+        $scope.Recherche.compte = CompteFctr.compte;
         if (check.checked) {
             $scope.selectedCount = $scope.selectedCount + 1;
             $scope.rechercheASup.push(recherche);
@@ -203,6 +208,8 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
     /*Redirection vers le resultats de la recherche sauvegarder*/
     $scope.ShowResultatRecherche = function (recherche) {
         RechercheFctr.selectedRecherche = recherche;
+        AnnonceFctr.selectedRecherche = recherche;
+        AnnonceFctr.selectedRegion = null;
         $scope.changeRoute("#/listOffre");
     };
     /*****************************************************************************************************/

@@ -1,7 +1,8 @@
 ﻿/*Controlleur de la page liste annonce*/
 app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, RegionFctr, CategorieFctr, CompteFctr, toastr) {
     $scope.selectedRecherche = RechercheFctr.selectedRecherche;
-    $scope.Recherche = { 'title': "", 'compte': CompteFctr.compte };
+    $scope.Recherche = RechercheFctr.rechercheVide;
+    $scope.Recherche.compte = CompteFctr.compte;
     $scope.listOfrP = [];
     $scope.regions = RegionFctr.regions;
     $scope.categories = CategorieFctr.categories;
@@ -43,22 +44,11 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /******************************************************************************/
 
     /*Onload : Recuperation de la liste des offre selon region*/
-    if (RechercheFctr.selectedRecherche === null) {
-        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
-            $scope.listOfrP = offres;
-        }, function (msg) {
-            toastr.error(msg, 'Erreur');
-        });
-    }
-    else {
-
-        AnnonceFctr.ListSelonRech($scope.selectedRecherche).then(function (offres) {
-            $scope.listOfrP = offres;
-        }, function (msg) {
-            toastr.error(msg, 'Erreur');
-        });
-        RechercheFctr.selectedRecherche = null;
-    };
+    AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
+        $scope.listOfrP = offres;
+    }, function (msg) {
+        toastr.error(msg, 'Erreur');
+    });
     /**************************************************************************/
 
     /*Cumuler les offres par page lors du scrollbar*/
@@ -127,7 +117,8 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
                     toastr.error(msg, 'Erreur');
                 });
             }
-            $scope.Recherche = { 'title': "", 'compte': CompteFctr.compte };
+            $scope.Recherche = RechercheFctr.rechercheVide;
+            $scope.Recherche.compte = CompteFctr.compte;
         }
     };
     /*************************************************************************/
@@ -149,6 +140,22 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         }
     };
     /*************************************************************************/
+
+    /*Lancer la recherche*/
+    $scope.LancerRecherche = function () {
+        AnnonceFctr.selectedRecherche = $scope.Recherche;
+        $scope.page.page = 0;
+        AnnonceFctr.sortType = 0;
+        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
+            $scope.listOfrP = offres;
+            $scope.ShowHideRech();
+        }, function (msg) {
+            toastr.error(msg, 'Erreur');
+            $scope.ShowHideRech();
+        });
+
+    }
+    /************************************************************************/
 
     /*Naviguer vers la page details offre*/
     $scope.showDetails = function (offre) {
