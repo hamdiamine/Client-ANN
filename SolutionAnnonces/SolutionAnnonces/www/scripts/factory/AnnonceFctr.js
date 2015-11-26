@@ -1,9 +1,36 @@
-﻿app.factory('AnnonceFctr', function ($http, $q) {
+﻿app.factory('AnnonceFctr', function ($http, $q, $cordovaGeolocation) {
     var factory = {
         selectedRegion: {},
         selectedAnnonce: {},
         selectedRecherche: null,
+        listAnn: [],
         sortType: 0,
+        lp: null,
+        lg: null,
+
+        /*Calcul des limite des coordonnées geo */
+        GetLimiteGeo: function (lp, lg, ray) {
+            // 1° de latitude = 111,11 Km, on fait donc un produit en croix 
+            var offSetLat = ray / 111.11;
+
+            // 1° de longitude à 'latitude' degrés de latitude correspond à 
+            // OneLongitudeDegree mètres. On passe à la méthode Math.Cos 
+            // des radians
+            var oneLongitudeDegree = 111.11 * Math.cos(lp * Math.PI / 180);
+
+            // Produit en croix pour trouver le nombre de degrés de longitude auquel 
+            // correspond la longueur de notre rayon
+            var offSetLong = ray / oneLongitudeDegree;
+
+            return {
+                lpmin: latitude - offSetLat,
+                lpmax: latitude + offSetLat,
+                lgmin: longitude - offSetLong,
+                lgmax: longitude + offSetLong
+            };
+        },
+        /***********************************************************************/
+
         /*Liste des offres paginer selon la région*/
         ListoffreP: function (p) {
             var url = null;
@@ -23,8 +50,8 @@
                         prof: factory.selectedRecherche.professionnel,
                         urg: factory.selectedRecherche.urgent,
                         ray: factory.selectedRecherche.rayon,
-                        lp: factory.selectedRecherche.laptitude,
-                        lg: factory.selectedRecherche.longitude,
+                        lp: factory.lp,
+                        lg: factory.lg,
                         page: p,
                         sort: factory.sortType
                     }
@@ -73,6 +100,8 @@
 
         /*Creation d'une annonce*/
         Create: function (annonce) {
+            annonce.laptitude = factory.lp;
+            annonce.longitude = factory.lg;
             var url = urlService + "/annonce/create";
             var deferred = $q.defer();
             $http.post(url, annonce)
@@ -130,8 +159,23 @@
                     deferred.reject("Problème lors de la suppression de l'annonce");
                 });
             return deferred.promise;
-        }
+        },
         /*************************************************************************/
+        /*Recuperation des coordonnees geo*/
+        RecupCoordGeo: function () {
+            var posOptions = { timeout: 10000, enableHighAccuracy: false };
+            $cordovaGeolocation
+              .getCurrentPosition(posOptions)
+              .then(function (position) {
+                  factory.lp = position.coords.latitude
+                  factory.lg = position.coords.longitude
+              }, function (err) {
+                  toastr.error("Impossible de récupérer les coordonnées de géolocalisation");
+              });
+        }
+
+
+        /************************************************************************************************************/
     };
     return factory;
 });

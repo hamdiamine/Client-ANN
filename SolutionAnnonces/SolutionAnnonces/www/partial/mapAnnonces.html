@@ -1,0 +1,85 @@
+﻿<nav class="menuRech" ng-class="{actived:showRech}">
+    <div style="width:20%; height:inherit; float:left; background: rgba(0,0,0,.3);" ng-click="ShowHideRech()">
+
+    </div>
+    <div style="width:80%; height:inherit; background-color:white; float:right; padding:20px">
+        <div class="form-group">
+            <input type="text" class="form-control" id="motCle" placeholder="Mot(s) clé(s)" ng-model="Recherche.motsCle">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" ng-model="Recherche.avecDesc"> Inclure la description dans la recherche
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox3" ng-model="Recherche.offre"> Offre
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox4" ng-model="Recherche.demande"> Demande
+            </label>
+        </div>
+        <div class="form-group">
+            <input type="number" ng-model="Recherche.rayon" />
+        </div>
+        <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
+        <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
+            <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')">
+                <span>{{selectedCategorie.label}}</span>
+                <div>
+                    <b></b>
+                </div>
+            </a>
+            <div class="chosen-drop" id="listCat">
+                <div class="chosen-search">
+                    <input type="text" autocomplete="off" class="" ng-model="rechCategorie">
+                </div>
+                <ul class="chosen-results">
+                    <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}">{{ct.label}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox1" ng-model="Recherche.particulier"> Particulier
+            </label>
+            <label class="checkbox-inline">
+                <input type="checkbox" id="inlineCheckbox2" ng-model="Recherche.professionnel"> Professionnel
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" checked="checked" ng-model="Recherche.urgent"> Annonces urgentes uniquement
+            </label>
+        </div>
+        <button class="btn btn-warning btn-lg btn-block" style="margin-left:auto; margin-right:auto" ng-click="LancerRecherche()">Rechercher</button>
+    </div>
+</nav>
+<div class="headPanel" style="position:fixed;z-index:35">
+    <div class="contentPanel">
+        <div class="leftPanel">
+            <a onclick="AfficheMenu()">
+                <img src="images/ic_action_storage.png" />
+            </a>
+
+        </div>
+        <div class="centerPanel">
+            Map
+        </div>
+        <div class="rightPanel">
+            <ul>
+                <li ng-show="showBtn" id="c-button--slide-right">
+                    <a ng-click="ShowHideRech()" class="btnMenu">
+                        <img src="images/ic_action_search.png" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div style="padding-top:65px">
+    <ng-map center="{{geo}}" zoom="11" style="height:600px; min-height:100%">
+        <marker position="current" title="Tu es là" optimized="false" centered="true" icon="{ url:'images/me_marker2.ico'}" animation="Animation.BOUNCE"></marker>
+        <marker ng-repeat="ann in listAnn" position="{{ann.geo}}" title="{{ann.title}}" optimized="false" icon="{ url:'images/ann_marker.ico'}"></marker>
+    </ng-map>
+</div>

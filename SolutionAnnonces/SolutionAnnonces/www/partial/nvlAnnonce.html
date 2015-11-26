@@ -12,7 +12,13 @@
                     Nouvelle annonce
                 </div>
                 <div class="rightPanel">
-
+                    <ul>
+                        <li>
+                            <a class="btnMenu" ng-click="RafraichGeo()">
+                                <img src="images/ic_action_web_site.png" />
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -95,8 +101,6 @@
             <div class="sousgrpInfo">
                 <div class="form-group required">
                     <label class="radio-inline">
-                        >
-
                         <input type="radio" name="classRadios" id="classRadios0" value="0" checked ng-model="nouvelAnnonce.classement" required>
                         Particulier
                     </label>
@@ -105,6 +109,11 @@
                         <input type="radio" name="classRadios" id="classRadios1" value="1" ng-model="nouvelAnnonce.classement" required>
                         Professionnel
                     </label>
+                </div>
+                <div>
+                    <ng-map center="current" zoom="15" style="height:100px;">
+                        <marker position="current" title="Tu es là" optimized="false" centered="true" icon="{ url:'images/me_marker2.ico'}" animation="Animation.BOUNCE"></marker>
+                    </ng-map>
                 </div>
                 <div class="form-group required">
                     <span class="glyphicon glyphicon-user iconTitre" aria-hidden="true"><span class="titre">Pseudo</span></span>

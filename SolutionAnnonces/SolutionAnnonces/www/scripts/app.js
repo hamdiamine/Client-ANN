@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngRoute', 'ngCordova','ngAnimate', 'toastr']);
+﻿var app = angular.module('app', ['ngRoute', 'ngCordova', 'ngAnimate', 'ngMap','toastr']);
 
 /*Centre dispatching des pages de l'application*/
 app.config(function ($routeProvider) {
@@ -14,8 +14,13 @@ app.config(function ($routeProvider) {
       .when('/listAnnoncesFav', { templateUrl: 'partial/listAnnoncesFav.html', controller: 'ListAnnoncesFavCtrl' })
       .when('/annonceEnLigne', { templateUrl: 'partial/annonceEnLigne.html', controller: 'AnnonceEnLigneCtrl' })
       .when('/listRecherche', { templateUrl: 'partial/listRecherche.html', controller: 'ListRechercheCtrl' })
+      .when('/mapAnnonces', { templateUrl: 'partial/mapAnnonces.html', controller: 'MapAnnoncesCtrl' })
       .otherwise({ redirectTo: '/' });
 
-
+    ['uiGmapGoogleMapApiProvider', function (GoogleMapApiProviders) {
+        GoogleMapApiProviders.configure({
+            china: true
+        });
+    }]
 });
 /***************************************************************************************************************************/

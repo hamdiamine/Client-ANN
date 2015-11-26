@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="btnMenu">
+                    <a class="btnMenu" ng-click="MapAnnonces()">
                         <img src="images/ic_action_location_found.png" />
                     </a>
                 </li>
@@ -28,7 +28,7 @@
 
 <div style="margin:0 auto;width: 60%;" class="fastDropDown">
     <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Région</span></span>
-    <div class="chosen-container chosen-container-single" style=" width:100%;" title="" >
+    <div class="chosen-container chosen-container-single" style=" width:100%;" title="">
         <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')">
             <span>{{selectedRegion.label}}</span>
             <div>

@@ -1,5 +1,5 @@
 ﻿/*Controlleur de la page nouvelle annonce*/
-app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileTransfer, $cordovaFile, AnnonceFctr, CategorieFctr, VilleFctr, toastr) {
+app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileTransfer, $cordovaFile, $cordovaGeolocation, AnnonceFctr, CategorieFctr, RegionFctr, VilleFctr, toastr) {
     $scope.nouvelAnnonce = { "etat": 0 };
     $scope.categories = CategorieFctr.categories;
     $scope.villes = VilleFctr.villes;
@@ -8,6 +8,8 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     $scope.newImg = {};
     $scope.inc = 0;
     $scope.date = new Date();
+    $scope.geo = [AnnonceFctr.lp, AnnonceFctr.lg];
+
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -34,6 +36,13 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
         $scope.selectedVille = ville;
         $scope.nouvelAnnonce.ville = ville;
         $scope.nouvelAnnonce.region = ville.region;
+        if ($scope.nouvelAnnonce.region === null) {
+            RegionFctr.getByVil(ville.id).then(function (rg) {
+                $scope.nouvelAnnonce.region = rg;
+            }, function (msg) {
+                toastr.error(msg, 'Erreur');
+            });
+        }
         showHideListCombo('#listVil');
     };
     /*****************************************************************************/
@@ -50,12 +59,15 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     };
     /*****************************************************************************/
 
-    /*Initialisation de la liste des image (pour test)*/
-    $scope.listNewIm = [{ 'inc': 1, 'uri': 'http://lovezphone.e-monsite.com/medias/images/sell-galaxy-s3.jpg' },
-                        { 'inc': 2, 'uri': 'http://lovezphone.e-monsite.com/medias/images/sell-galaxy-s3.jpg' },
-                        { 'inc': 3, 'uri': 'http://lovezphone.e-monsite.com/medias/images/sell-galaxy-s3.jpg' },
-                        { 'inc': 4, 'uri': 'http://lovezphone.e-monsite.com/medias/images/sell-galaxy-s3.jpg' }];
+    /*Rafraichissement des coordonnées GEO*/
+    $scope.RafraichGeo = function () {
+        if ($scope.lp === null) {
+            AnnonceFctr.RecupCoordGeo();
+            $scope.geo = [AnnonceFctr.lp, AnnonceFctr.lg];
+        }
 
+    }
+    /************************************************************************************************************/
 
     /*importer photo depuis gallery*/
     $scope.importPhoto = function () {

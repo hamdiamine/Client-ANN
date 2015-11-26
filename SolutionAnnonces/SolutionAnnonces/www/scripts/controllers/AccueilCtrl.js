@@ -1,5 +1,5 @@
 ﻿/*Controlleur de la page d'accueil*/
-app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, toastr) {
+app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, toastr) {
     $scope.regions = [];
     $scope.selectedRegion = {};
 
@@ -14,6 +14,10 @@ app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, Recherc
         };
     };
     /*************************************************************************************/
+
+    $scope.MapAnnonces = function () {
+        $scope.changeRoute("#/mapAnnonces");
+    }
 
     /*Recuperation de la liste des categories*/
     CategorieFctr.listAll().then(function (listCat) {
@@ -38,6 +42,10 @@ app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, Recherc
         toastr.error(msg, 'Erreur');
     });
     /*************************************************************************************/
+
+    /*Recuperer coordonnées GEO*/
+    AnnonceFctr.RecupCoordGeo();
+    /************************************************************************************/
 
     /*Selection d'une region a travers le combo*/
     $scope.setRegion = function (region) {

@@ -46,6 +46,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /*Onload : Recuperation de la liste des offre selon region*/
     AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
         $scope.listOfrP = offres;
+        AnnonceFctr.listAnn = offres;
     }, function (msg) {
         toastr.error(msg, 'Erreur');
     });
@@ -54,8 +55,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /*Cumuler les offres par page lors du scrollbar*/
     $scope.AddToListOfreP = function () {
         $scope.page = $scope.page + 1;
-        OffreFctr.listOfrP($scope.page).then(function (offres) {
+        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
             $scope.listOfrP += offres;
+            AnnonceFctr.listAnn = $scope.listOfrP;
         }, function (msg) {
             toastr.error(msg, 'Erreur');
         });
@@ -71,6 +73,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         }
         AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
             $scope.listOfrP = offres;
+            AnnonceFctr.listAnn = $scope.listOfrP;
         }, function (msg) {
             toastr.error(msg, 'Erreur');
         });
@@ -87,6 +90,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         }
         AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
             $scope.listOfrP = offres;
+            AnnonceFctr.listAnn = $scope.listOfrP;
         }, function (msg) {
             toastr.error(msg, 'Erreur');
         });
@@ -153,8 +157,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
             toastr.error(msg, 'Erreur');
             $scope.ShowHideRech();
         });
-
-    }
+    };
     /************************************************************************/
 
     /*Naviguer vers la page details offre*/

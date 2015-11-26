@@ -1,5 +1,5 @@
 ﻿/*Variables globales*/
-var urlService = "http://localhost:8081";
+var urlService = "http://197.7.58.195:8081";
 var devise = "€";
 /****************************************************************************/
 
