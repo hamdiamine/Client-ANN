@@ -1,5 +1,5 @@
 ﻿/*Controlleur de la page d'accueil*/
-app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, toastr) {
+app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, MotifAbusFctr, toastr) {
     $scope.regions = [];
     $scope.selectedRegion = {};
 
@@ -21,7 +21,7 @@ app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr,
 
     /*Recuperation de la liste des categories*/
     CategorieFctr.listAll().then(function (listCat) {
-        CategorieFctr.categories = listCat;
+
     }, function (msg) {
         toastr.error(msg, 'Erreur');
     });
@@ -29,7 +29,7 @@ app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr,
 
     /*Recuperation de la liste des villes*/
     VilleFctr.listAll().then(function (listVil) {
-        VilleFctr.villes = listVil;
+
     }, function (msg) {
         toastr.error(msg, 'Erreur');
     });
@@ -38,6 +38,14 @@ app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr,
     /*Recuperation de la liste des regions*/
     RegionFctr.listAll().then(function (listRg) {
         $scope.regions = listRg;
+    }, function (msg) {
+        toastr.error(msg, 'Erreur');
+    });
+    /*************************************************************************************/
+
+    /*Recuperation de la liste des motifs*/
+    MotifAbusFctr.listAll().then(function (listMt) {
+
     }, function (msg) {
         toastr.error(msg, 'Erreur');
     });
@@ -52,6 +60,7 @@ app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr,
         $scope.selectedRegion = region;
         AnnonceFctr.selectedRegion = region;
         AnnonceFctr.selectedRecherche = null;
+        AnnonceFctr.type = 0;
         AnnonceFctr.sortType = 0;
         $scope.changeRoute("#/listOffre");
     };

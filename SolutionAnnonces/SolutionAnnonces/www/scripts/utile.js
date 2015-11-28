@@ -1,5 +1,5 @@
 ﻿/*Variables globales*/
-var urlService = "http://197.7.58.195:8081";
+var urlService = "http://192.168.1.81:8081";
 var devise = "€";
 /****************************************************************************/
 
@@ -9,9 +9,11 @@ var _err_listdem = "Impossible de récupérer la liste des demandes";
 var _err_listreg = "Impossible de récupérer la liste des régions";
 var _err_listcat = "Impossible de récupérer la liste des catégories";
 var _err_listvil = "Impossible de récupérer la liste des villes";
+var _err_listmotif = "Impossible de récupérer la liste des motifs abus";
 var _err_listphoto = "Impossible de récupérer les photos";
 var _err_crann = "Problème lors de la création de l'annonce";
 var _err_crrech = "Problème lors de la création de la recherche";
+var _err_crabus = "Problème lors de la création de l'abus";
 var _err_delphoto = "Problème lors de la suppression des photos";
 var _err_delann = "Problème lors de la suppression de l'annonce";
 var _err_delrech = "Problème lors de la suppression de la recherche";
@@ -21,16 +23,6 @@ var _war_gps = "L'option POSITION n'est pas activer, la fonction de géolocalisa
 var _err_touschamps = "Veuillez renseigner tous les champs obligatoires (*)";
 var _err_titrerech = "Veuillez renseigner le titre de la recherche"
 /****************************************************************************/
-
-/*javascript utile pour la modification de l'image favoris dans la liste annonce*/
-function favorisimage(img) {
-    var t = img.src;
-    var t2 = img.src.match(/jaime.png/);
-    img.src = img.src.match(/jaime.png/) ?
-              img.src.replace(/jaime.png/, "jaimepas.png") :
-              img.src.replace(/jaimepas.png/, "jaime.png");
-}
-/*****************************************************************************/
 
 /*javascript du slide des image détails annonces*/
 $(".start-slide").click(function () {

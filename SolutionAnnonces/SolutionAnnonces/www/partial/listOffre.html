@@ -130,17 +130,17 @@
 </div>
 <div class="listAnnonce">
     <ul>
-        <li ng-repeat="ofr in listOfrP">
-            <div style="width:90%; float:left" ng-click="showDetails(ofr)">
-                <img src="{{ofr.imagePrincipal}}">
-                <h5>{{ofr.titre}}</h5>
-                <span class="prix">{{ofr.prix + devise}} </span>
-                <p>{{ofr.categorie.label}}</p>
-                <p>{{ofr.ville.label}}</p>
-                <p>{{ofr.dateAff}}</p>
+        <li ng-repeat="ann in listAnnP">
+            <div style="width:90%; float:left" ng-click="showDetails(ann)">
+                <img src="{{ann.imagePrincipal}}">
+                <h5>{{ann.titre}}</h5>
+                <span class="prix">{{ann.prix}}{{devise}} </span>
+                <p>{{ann.categorie.label}}</p>
+                <p>{{ann.ville.label}}</p>
+                <p>{{ann.dateAff}}</p>
             </div>
             <div style="width:10%; float:right">
-                <img onclick="favorisimage(this)" src="images/jaimepas.png" style="width:24px;height:24px;float:right" />
+                <img id="im_{{ann.id}}" ng-click="favorisimage(ann)" src="images/jaimepas.png" style="width:24px;height:24px;float:right" />
             </div>
         </li>
     </ul>

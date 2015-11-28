@@ -353,7 +353,7 @@ nav.menu {
     /*outline: 1px solid red;*/
     padding-left: 0;
     width: 200px;
-    height: 150px;
+    height: auto;
 }
 
     .menuUl a {
@@ -389,7 +389,7 @@ nav.menuTrie {
     top: 7px;
     box-sizing: border-box;
     z-index: 20;
-    height: 150px;
+    height: auto;
     -webkit-transition: all .3s;
     -o-transition: all .3s;
     transition: all .3s;
@@ -437,6 +437,10 @@ nav.menuRech {
 
 .detailsAnnonce {
     padding-top: 55px;
+}
+
+.minimiseMenu{
+    height:100px;
 }
 
 .coreDetails {

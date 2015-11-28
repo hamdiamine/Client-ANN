@@ -8,6 +8,7 @@
             var deferred = $q.defer();
             $http.get(url)
                 .success(function (data, status) {
+                    factory.villes = data;
                     deferred.resolve(data);
                 }).error(function (error, status) {
                     deferred.reject(_err_listvil);

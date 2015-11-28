@@ -17,6 +17,13 @@ app.controller('NavigationCtrl', function ($scope, AnnonceFctr, toastr) {
         if (url === "#/listOffre") {
             AnnonceFctr.selectedRecherche = null;
             AnnonceFctr.selectedRegion = null;
+            AnnonceFctr.type = 0;
+            AnnonceFctr.sortType = 0;
+        }
+        else if (url === "#/listDemande") {
+            AnnonceFctr.selectedRecherche = null;
+            AnnonceFctr.selectedRegion = null;
+            AnnonceFctr.type = 1;
             AnnonceFctr.sortType = 0;
         }
         $scope.changeRoute(url);

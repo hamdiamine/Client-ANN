@@ -9,7 +9,7 @@
     <AndroidEmulatorID>AndroidDevice;Appareil</AndroidEmulatorID>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Android'">
-    <DebuggerFlavor>RippleNexus</DebuggerFlavor>
-    <AndroidEmulatorID>AndroidEmulator;Émulateur Google Android</AndroidEmulatorID>
+    <DebuggerFlavor>AndroidEmulator</DebuggerFlavor>
+    <AndroidEmulatorID>AndroidDevice;Appareil</AndroidEmulatorID>
   </PropertyGroup>
 </Project>

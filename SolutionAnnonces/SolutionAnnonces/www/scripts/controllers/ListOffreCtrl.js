@@ -3,7 +3,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     $scope.selectedRecherche = RechercheFctr.selectedRecherche;
     $scope.Recherche = RechercheFctr.rechercheVide;
     $scope.Recherche.compte = CompteFctr.compte;
-    $scope.listOfrP = [];
+    $scope.listAnnP = [];
     $scope.regions = RegionFctr.regions;
     $scope.categories = CategorieFctr.categories;
     $scope.selectedRegion = {};
@@ -14,6 +14,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     $scope.ShowMenu = null;
     $scope.showRech = false;
     $scope.showDialog = false;
+    $scope.devise = devise;
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -44,9 +45,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /******************************************************************************/
 
     /*Onload : Recuperation de la liste des offre selon region*/
-    AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
-        $scope.listOfrP = offres;
-        AnnonceFctr.listAnn = offres;
+    AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+        $scope.listAnnP = annonces;
+        AnnonceFctr.listAnn = annonces;
     }, function (msg) {
         toastr.error(msg, 'Erreur');
     });
@@ -55,9 +56,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /*Cumuler les offres par page lors du scrollbar*/
     $scope.AddToListOfreP = function () {
         $scope.page = $scope.page + 1;
-        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
-            $scope.listOfrP += offres;
-            AnnonceFctr.listAnn = $scope.listOfrP;
+        AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.listAnnP += annonces;
+            AnnonceFctr.listAnn = $scope.listAnnP;
         }, function (msg) {
             toastr.error(msg, 'Erreur');
         });
@@ -71,9 +72,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         } else {
             AnnonceFctr.sortType = 1;
         }
-        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
-            $scope.listOfrP = offres;
-            AnnonceFctr.listAnn = $scope.listOfrP;
+        AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.listAnnP = annonces;
+            AnnonceFctr.listAnn = $scope.listAnnP;
         }, function (msg) {
             toastr.error(msg, 'Erreur');
         });
@@ -88,9 +89,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         } else {
             AnnonceFctr.sortType = 3;
         }
-        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
-            $scope.listOfrP = offres;
-            AnnonceFctr.listAnn = $scope.listOfrP;
+        AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.listAnnP = annonces;
+            AnnonceFctr.listAnn = $scope.listAnnP;
         }, function (msg) {
             toastr.error(msg, 'Erreur');
         });
@@ -150,8 +151,8 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         AnnonceFctr.selectedRecherche = $scope.Recherche;
         $scope.page.page = 0;
         AnnonceFctr.sortType = 0;
-        AnnonceFctr.ListoffreP($scope.page).then(function (offres) {
-            $scope.listOfrP = offres;
+        AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.listAnnP = annonces;
             $scope.ShowHideRech();
         }, function (msg) {
             toastr.error(msg, 'Erreur');
@@ -161,11 +162,17 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /************************************************************************/
 
     /*Naviguer vers la page details offre*/
-    $scope.showDetails = function (offre) {
-        AnnonceFctr.selectedAnnonce = offre;
+    $scope.showDetails = function (annonce) {
+        AnnonceFctr.selectedAnnonce = annonce;
         $scope.changeRoute("#/detailAnnonce");
     };
     /*************************************************************************/
+
+    /*javascript utile pour la modification de l'image favoris dans la liste annonce*/
+    $scope.favorisimage = function (annonce) {
+        AnnonceFctr.ChangerImgFav(annonce);
+    };
+    /*****************************************************************************/
 
     /*Afficher ou masquer le bouton de sauvegarde dans la bar en haut*/
     $scope.ShowHideBtn = function () {

@@ -3,10 +3,12 @@
         selectedRegion: {},
         selectedAnnonce: {},
         selectedRecherche: null,
+        type: 0,
         listAnn: [],
         sortType: 0,
         lp: null,
         lg: null,
+        listAnnFav: [],
 
         /*Calcul des limite des coordonnées geo */
         GetLimiteGeo: function (lp, lg, ray) {
@@ -32,7 +34,7 @@
         /***********************************************************************/
 
         /*Liste des offres paginer selon la région*/
-        ListoffreP: function (p) {
+        ListAnnP: function (p) {
             var url = null;
             var config = {};
             if (factory.selectedRecherche != null) {
@@ -64,9 +66,9 @@
                 };
             }
             else {
-                url = urlService + "/annonce/allofrp";
+                url = urlService + "/annonce/findbytype";
                 config = {
-                    params: { page: p, sort: factory.sortType }
+                    params: { type: factory.type, page: p, sort: factory.sortType }
                 };
             }
 
@@ -172,9 +174,29 @@
               }, function (err) {
                   toastr.error("Impossible de récupérer les coordonnées de géolocalisation");
               });
+        },
+        /************************************************************************************************************/
+
+        /*Changer image fav*/
+        ChangerImgFav: function (annonce) {
+        var url = $("#im_" + annonce.id).attr("src");
+        var t2 = url.match("jaime.png");
+        if (t2 === null) {
+            var nvl = url.replace("jaimepas.png", "jaime.png");
+            $("#im_" + annonce.id).attr("src", nvl);
+            factory.listAnnFav.push(annonce);
         }
+        else {
+            var nvl = url.replace("jaime.png", "jaimepas.png");
+            $("#im_" + annonce.id).attr("src", nvl);
+            for (var i = 0; i < factory.listAnnFav.length; i++) {
+                if (annonce.id === factory.listAnnFav[i].id) {
+                    factory.listAnnFav.splice(i, 1);
+                }
+            }
 
-
+        }
+    }
         /************************************************************************************************************/
     };
     return factory;

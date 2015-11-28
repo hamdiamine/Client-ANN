@@ -12,11 +12,11 @@
     <div style="height:100%">
     </div>
 </nav>
-<nav class="menuTrie" ng-class="{actived:showMenu}" style="height:200px">
+<nav class="menuTrie" ng-class="{actived:showMenu}" style="height:auto">
     <ul class="menuUl">
-        <li><a>Ajouter contact</a></li>
-        <li><a>Modifier</a></li>
-        <li><a ng-click="ShowHideDialog()">Supprimer</a></li>
+        <li><a ng-click="CreateContact()">Ajouter contact</a></li>
+        <li ng-show="{{compte!=null}}"><a>Modifier</a></li>
+        <li ng-show="{{compte!=null}}"><a ng-click="ShowHideDialog()">Supprimer</a></li>
         <li><a href="#/abus">Signaler</a></li>
     </ul>
 </nav>
@@ -78,7 +78,7 @@
                     <span style="color:#959595; font-weight:lighter; font-size:10px">{{selectedAnnonce.dateAff}}</span>
                 </div>
                 <div class="col-xs-4">
-                    <span class="label label-warning" style="font-weight:bold; font-size:18px; float:right">{{selectedAnnonce.prix}}</span>
+                    <span class="label label-warning" style="font-weight:bold; font-size:18px; float:right">{{selectedAnnonce.prix}}{{devise}}</span>
                 </div>
             </div>
             <p style="margin-top:5px; font:900 12px 'Courier New', Courier, monospace;">
@@ -123,13 +123,13 @@
         <div style="width:100%; padding-top:5px">
             <center>
                 <div style="width:20%; float:left">
-                    <a href="#/mail">
+                    <a ng-click="EnvoiMail()">
                         <img src="images/ic_action_new_email.png" />
                     </a>
                 </div>
 
                 <div style="width:20%; float:left">
-                    <a style="float:none" ng-click="Call({{selectedAnnonce.numTel}})">
+                    <a style="float:none" ng-click="Call()">
                         <img src="images/ic_action_call.png" />
                     </a>
                 </div>
@@ -147,8 +147,8 @@
                 </div>
 
                 <div style="width:20%; float:right">
-                    <a style="float:none" href="#/abus">
-                        <img src="images/ic_action_error.png" />
+                    <a style="float:none" href="#/authentification">
+                        <img src="images/ic_action_person.png" />
                     </a>
                 </div>
             </center>

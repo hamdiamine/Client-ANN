@@ -11,7 +11,7 @@
             var deferred = $q.defer();
             $http.get(url, config)
                 .success(function (data, status) {
-                    factory.recherches = data;
+                    factory.compte = data;
                     deferred.resolve(data);
                 }).error(function (error, status) {
                     deferred.reject('');

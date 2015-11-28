@@ -1,52 +1,51 @@
 ﻿<div class="headPanel" style="position:fixed;z-index:35">
     <div class="contentPanel">
         <div class="leftPanel">
-            <a onclick="AfficheMenu()">
-                <img src="images/ic_action_storage.png" />
+            <a href="#/detailAnnonce">
+                <img src="images/ic_action_previous_item.png" />
             </a>
         </div>
         <div class="centerPanel">
             Signaler un abus
         </div>
         <div class="rightPanel">
-            <ul>
-                <li>
-                    <a href="#/detailAnnonce" class="btnMenu">
-                        <img src="images/ic_action_send_now.png" />
-                    </a>
-                </li>
-                <li>
-                    <a href="#/detailAnnonce">
-                        <img src="images/ic_action_previous_item.png" />
-                    </a>
-                </li>
-            </ul>
+
         </div>
     </div>
 </div>
 <div style="background-color:#F7EEE0; width:100%; height:100%; min-height:100%">
     <div style="margin-left:30px; margin-right:30px; padding-top:65px">
-        <p>
-            <div class="btn-group fastDropDown" style="padding-top:0%">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span style="float:left">Motif</span>   <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href>Action</a></li>
-                    <li><a href>Another action</a></li>
-                    <li><a href>Something else here</a></li>
-                    <li><a href>Separated link</a></li>
-                </ul>
-            </div>
-        </p>
-        <p>
-            <input type="text" class="form-control" id="nom" placeholder="Votre nom">
-        </p>
-        <p>
-            <input type="email" class="form-control" id="mail" placeholder="Votre adresse mail">
-        </p>
-        <p>
-            <textarea style="width:100%; height:200px" placeholder="Votre message"></textarea>
-        </p>
+        <form id="formNvlAbus" ng-submit="CreateAbus()">
+            <p>
+                <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Motif</span></span>
+                <div class="chosen-container chosen-container-single" style=" width:100%;" title="">
+                    <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listMotif')">
+                        <span>{{selectedMotif.label}}</span>
+                        <input value="{{selectedMotif.label}}" required style="display:none" />
+                        <div>
+                            <b></b>
+                        </div>
+                    </a>
+                    <div class="chosen-drop" id="listMotif">
+                        <div class="chosen-search">
+                            <input type="text" autocomplete="off" class="" ng-model="rechMotif">
+                        </div>
+                        <ul class="chosen-results">
+                            <li ng-repeat="mt in motifs | filter:rechMotif" ng-click="setMotif(mt)" class="active-result" data-option-array-index="{{mt.id}}">{{mt.label}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </p>
+            <p>
+                <input type="text" class="form-control" id="nom" placeholder="Votre nom" ng-model="abus.nom" required>
+            </p>
+            <p>
+                <input type="email" class="form-control" id="mail" placeholder="Votre adresse mail" ng-model="abus.mail" required>
+            </p>
+            <p>
+                <textarea style="width:100%; height:200px" placeholder="Votre message" ng-model="abus.message" required></textarea>
+            </p>
+            <button type="submit" class="btn btn-warning btn-lg btn-block" style="margin-left:auto; margin-right:auto">Envoyer</button>
+        </form>
     </div>
 </div>
