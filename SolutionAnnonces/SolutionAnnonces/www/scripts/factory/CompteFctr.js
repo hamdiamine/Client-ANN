@@ -14,7 +14,7 @@
                     factory.compte = data;
                     deferred.resolve(data);
                 }).error(function (error, status) {
-                    deferred.reject('');
+                    deferred.reject(_err_authen);
                 });
             return deferred.promise;
         }
