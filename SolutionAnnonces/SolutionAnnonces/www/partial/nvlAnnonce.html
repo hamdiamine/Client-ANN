@@ -1,4 +1,5 @@
-﻿<form id="formNvlAnnonce" ng-submit="createAnnonce()">
+﻿
+<form id="formNvlAnnonce" ng-submit="createAnnonce()">
     <div class="nvlAnn">
         <div class="headPanel headnvl">
             <div class="contentPanel">
@@ -38,6 +39,11 @@
                 </div>
                 <div class="form-group">
                     <span class="glyphicon glyphicon-picture iconTitre" aria-hidden="true"><span class="titre">Images</span></span>
+                    <div id="owl-demo" class="owl-carousel owl-theme effet2">
+                        <div class="item" ng-repeat="ph in photos" ng-repeat-owl-carousel carousel-init="carouselInitializer">
+                            <img src="{{ph.uri}}" class="img-thumbnail">
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group required">
                     <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
@@ -157,5 +163,4 @@
     <center>
         <button type="submit" class="btn btn-warning btn-sm">Valider</button>
     </center>
-
 </form>

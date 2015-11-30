@@ -1,4 +1,10 @@
-﻿<nav class="menuRech" ng-class="{actived:showDialog}" style="background: rgba(0,0,0,.3)">
+﻿<nav class="menuRech" ng-class="{actived:showZoom}" ng-click="ShowHideZoom()" style="background: rgba(0,0,0,.3);">
+    <center>
+        <img src="http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$" style="width:auto ;height:auto;">
+    </center>
+
+</nav>
+<nav class="menuRech" ng-class="{actived:showDialog}" style="background: rgba(0,0,0,.3)">
     <div style="width:100%; height:100px">
         <div class="dialog">
             <h6>Voulez vous supprimer cette annonce</h6>
@@ -44,31 +50,13 @@
         </div>
     </div>
     <div class="detailsAnnonce">
-        <div id="myCarousel" class="carousel">
-            <ol class="carousel-indicators">
-                <!--TODO : ngRepeat-->
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
-            <div class="carousel-inner">
-                <!--TODO : ngRepeat-->
-                <div class="item active">
-                    <img style="width:100%; height:200px" src="http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$" class="img-responsive" style="margin-left:auto; margin-right:auto" />
-                </div>
-                <div class="item">
-                    <img style="width:100%; height:200px" src="http://lovezphone.e-monsite.com/medias/images/sell-galaxy-s3.jpg" class="img-responsive" style="margin-left:auto; margin-right:auto" />
-                </div>
-                <div class="item">
-                    <img style="width:100%; height:200px" src="http://www.androidcentral.com/sites/androidcentral.com/files/styles/xlarge/public/postimages/276955/s3-neo-plus.jpg" class="img-responsive" style="margin-left:auto; margin-right:auto" />
+        <div class="form-group">
+            <span class="glyphicon glyphicon-picture iconTitre" aria-hidden="true"><span class="titre">Images</span></span>
+            <div id="owl-demo" class="owl-carousel owl-theme effet2">
+                <div class="item" ng-repeat="ph in photos" ng-repeat-owl-carousel carousel-init="carouselInitializer" ng-click="ShowHideZoom()">
+                    <img src="{{ph.uri}}" class="img-thumbnail" style="width:115px ;height:115px">
                 </div>
             </div>
-            <a class="carousel-control left" onclick="previousImg()">
-                <span class="icon-prev"></span>
-            </a>
-            <a class="carousel-control right" onclick="nextImg()">
-                <span class="icon-next"></span>
-            </a>
         </div>
         <div class="coreDetails">
             <span style="color:#959595; font-weight:bold; font-size:12px">{{selectedAnnonce.categorie.label}}</span>

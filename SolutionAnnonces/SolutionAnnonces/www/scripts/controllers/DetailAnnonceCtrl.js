@@ -4,6 +4,7 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
     $scope.photos = [];
     $scope.showMenu = false;
     $scope.showDialog = false;
+    $scope.showZoom = false;
     $scope.devise = devise;
     $scope.compte = CompteFctr.compte;
     $scope.contact = {
@@ -23,13 +24,57 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
     };
 
     /*Recuperation de la liste des photo de l'annonce*/
-
+    /*
     PhotoFctr.ListSelonAnn($scope.selectedAnnonce.id).then(function (listPhoto) {
         $scope.photos = listPhoto;
     }, function (msg) {
         toastr.error(msg, 'Erreur');
     });
+    */
+    /*Pour test*/
+    $scope.photos = [
+        {
+            uri: 'http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$',
+            num: 1
+        },
+        {
+            uri: 'http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$',
+            num: 2
+        },
+        {
+            uri: 'http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$',
+            num: 3
+        }
+    ];
     /*******************************************************************************/
+
+    /*Initialise carousel pour ngrepeat*/
+    $scope.carouselInitializer = function () {
+        var owl = $("#owl-demo");
+
+        owl.owlCarousel({
+            items: 3, //10 items above 1000px browser width
+            itemsDesktop: [1000, 5], //5 items between 1000px and 901px
+            itemsDesktopSmall: [900, 3], // betweem 900px and 601px
+            itemsTablet: [600, 2], //2 items between 600 and 0
+            itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
+        });
+
+        // Custom Navigation Events
+        $(".next").click(function () {
+            owl.trigger('owl.next');
+        })
+        $(".prev").click(function () {
+            owl.trigger('owl.prev');
+        })
+        $(".play").click(function () {
+            owl.trigger('owl.play', 1000); //owl.play event accept autoPlay speed as second parameter
+        })
+        $(".stop").click(function () {
+            owl.trigger('owl.stop');
+        })
+    };
+    /******************************************************************/
 
     /*Suppression de l'annonce et toutes ses dépendance*/
     $scope.DeleteAnnonce = function () {
@@ -105,5 +150,11 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
         $scope.showDialog = !$scope.showDialog
         $scope.showMenu = false;
     };
+    /******************************************************************************/
+
+    /*Affiche hide zoom*/
+    $scope.ShowHideZoom = function () {
+        $scope.showZoom = !$scope.showZoom;
+    }
     /******************************************************************************/
 });

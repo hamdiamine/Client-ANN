@@ -5,11 +5,39 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     $scope.villes = VilleFctr.villes;
     $scope.selectedCategorie = {};
     $scope.selectedVille = {};
-    $scope.newImg = {};
     $scope.inc = 0;
     $scope.date = new Date();
     $scope.geo = [AnnonceFctr.lp, AnnonceFctr.lg];
+    $scope.photos = [];
 
+    /*Initialise carousel pour ngrepeat*/
+    $scope.carouselInitializer = function () {
+        var owl = $("#owl-demo");
+
+        owl.owlCarousel({
+            items: 10, //10 items above 1000px browser width
+            itemsDesktop: [1000, 5], //5 items between 1000px and 901px
+            itemsDesktopSmall: [900, 3], // betweem 900px and 601px
+            itemsTablet: [600, 2], //2 items between 600 and 0
+            itemsMobile: false // itemsMobile disabled - inherit from itemsTablet option
+        });
+
+        // Custom Navigation Events
+        $(".next").click(function () {
+            owl.trigger('owl.next');
+        })
+        $(".prev").click(function () {
+            owl.trigger('owl.prev');
+        })
+        $(".play").click(function () {
+            owl.trigger('owl.play', 1000); //owl.play event accept autoPlay speed as second parameter
+        })
+        $(".stop").click(function () {
+            owl.trigger('owl.stop');
+        })
+    };
+
+    /******************************************************************/
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -112,13 +140,11 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
         $cordovaCamera.getPicture(options).then(function (imageURI) {
             $scope.newImg = {};
             $scope.inc = $scope.inc + 1;
-            $scope.newImg = { 'inc': $scope.inc, 'uri': imageURI };
-            $scope.listNewIm.push($scope.newImg);
+            $scope.newImg = { 'num': $scope.inc, 'uri': imageURI };
+            $scope.photos.push($scope.newImg);
 
         }, function (err) {
             toastr.error("Une erreur est survenue lors du chargement de l'image: Code = " + err.code, "Erreur");
-            console.log('Failed because: ');
-            console.log(err);
         });
     };
     /************************************************************************************************************/
