@@ -1439,9 +1439,10 @@ if (typeof Object.create !== "function") {
 
     $.fn.owlCarousel = function (options) {
         return this.each(function () {
+            /*Commenter par HKH le 02/01/2015 : Pour la regeneration du CAROUSEL après l'ajout d'une photo
             if ($(this).data("owl-init") === true) {
                 return false;
-            }
+            }*/
             $(this).data("owl-init", true);
             var carousel = Object.create(Carousel);
             carousel.init(options, this);

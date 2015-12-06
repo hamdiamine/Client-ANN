@@ -1,5 +1,22 @@
 ﻿app.factory('PhotoFctr', function ($http, $q) {
     var factory = {
+
+
+        /*Upload photo*/
+        UploadPhoto: function (photo) {
+            var url = urlService + "/photo/upload";
+            var deferred = $q.defer();
+            $http.post(url, photo)
+                .success(function (data, status) {
+                    deferred.resolve(data);
+                }).error(function (error, status) {
+                    deferred.reject(error.message);
+                });
+            return deferred.promise;
+        },
+
+        /**********************************************************/
+
         /*Liste des photos d'une annonce*/
         ListSelonAnn: function (idAnn) {
             var url = urlService + "/photo/allByAnn";

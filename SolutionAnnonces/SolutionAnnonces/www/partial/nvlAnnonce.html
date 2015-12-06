@@ -13,6 +13,7 @@
                     Nouvelle annonce
                 </div>
                 <div class="rightPanel">
+                    <!--
                     <ul>
                         <li>
                             <a class="btnMenu" ng-click="RafraichGeo()">
@@ -20,6 +21,7 @@
                             </a>
                         </li>
                     </ul>
+                        -->
                 </div>
             </div>
         </div>
@@ -39,6 +41,8 @@
                 </div>
                 <div class="form-group">
                     <span class="glyphicon glyphicon-picture iconTitre" aria-hidden="true"><span class="titre">Images</span></span>
+                    <a href ng-click="addPhoto('CAMERA')" style="float:right; margin-left:30px">Appareil photo...</a>
+                    <a href ng-click="addPhoto('PHOTOLIBRARY')" style="float:right">Gallerie...</a>
                     <div id="owl-demo" class="owl-carousel owl-theme effet2">
                         <div class="item" ng-repeat="ph in photos" ng-repeat-owl-carousel carousel-init="carouselInitializer">
                             <img src="{{ph.uri}}" class="img-thumbnail">

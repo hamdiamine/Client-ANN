@@ -1,5 +1,5 @@
 ﻿/*Controlleur de la page nouvelle annonce*/
-app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileTransfer, $cordovaFile, $cordovaGeolocation, AnnonceFctr, CategorieFctr, RegionFctr, VilleFctr, toastr) {
+app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileTransfer, $cordovaFile, $cordovaGeolocation, AnnonceFctr, CategorieFctr, RegionFctr, VilleFctr, PhotoFctr, toastr) {
     $scope.nouvelAnnonce = { "etat": 0 };
     $scope.categories = CategorieFctr.categories;
     $scope.villes = VilleFctr.villes;
@@ -97,55 +97,34 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     }
     /************************************************************************************************************/
 
-    /*importer photo depuis gallery*/
-    $scope.importPhoto = function () {
+    /*importer photo depuis gallery ou appareil photo*/
+    $scope.addPhoto = function (type) {
         var options = {
             quality: 50,
-            targetWidth: 800,
+            destinationType: Camera.DestinationType.DATA_URL,
+            //allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 600,
             targetHeight: 800,
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY
+            //popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false,
+            correctOrientation: true
         };
-
-        $cordovaCamera.getPicture(options).then(function (imageURI) {
+        if (type === "CAMERA") {
+            options.sourceType = Camera.PictureSourceType.CAMERA;
+        } else if (type === "PHOTOLIBRARY") {
+            options.sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
+        }
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $scope.newImg = {};
             $scope.inc = $scope.inc + 1;
-            $cordovaFileTransfer.download(imageURI, cordova.file.dataDirectory + $scope.inc + ".jpg", {}, true).then(
-                           function (fileEntry) {
-                               alert("transfert : " + fileEntry.nativeURL)
-                               $scope.newImg = {};
-                               $scope.newImg = { 'inc': $scope.inc, 'uri': fileEntry.nativeURL };
-                               $scope.listNewIm.push($scope.newImg);
-                           },
-                           function (error) {
-                               toastr.error(error, 'Erreur');
-                           }
-                       );
-
+            $scope.newImg = { 'num': $scope.inc, 'uri': "data:image/jpeg;base64," + imageData, 'fileData': imageData, annonce: { 'id': 1 } };
+            $scope.photos.push($scope.newImg);
+            PhotoFctr.UploadPhoto($scope.newImg);
 
         }, function (err) {
             toastr.error("Une erreur est survenue lors du chargement de l'image: Code = " + err.code, "Erreur");
-            console.log('Failed because: ');
-            console.log(err);
         });
     };
     /******************************************************************************************************/
-
-    /*prendre photo depuis camera*/
-    $scope.capturePhoto = function () {
-        var options = {
-            destinationType: Camera.DestinationType.FILE_URI,
-            sourceType: Camera.PictureSourceType.CAMERA,
-        };
-
-        $cordovaCamera.getPicture(options).then(function (imageURI) {
-            $scope.newImg = {};
-            $scope.inc = $scope.inc + 1;
-            $scope.newImg = { 'num': $scope.inc, 'uri': imageURI };
-            $scope.photos.push($scope.newImg);
-
-        }, function (err) {
-            toastr.error("Une erreur est survenue lors du chargement de l'image: Code = " + err.code, "Erreur");
-        });
-    };
-    /************************************************************************************************************/
 });

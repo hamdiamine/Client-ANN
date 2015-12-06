@@ -107,7 +107,7 @@ html, body {
 
 /*CSS de la page nouvelle annonce*/
 .nvlAnn {
-    background-color: #F7EEE0;
+    
 }
 
 .headnvl {
@@ -186,6 +186,10 @@ ul.lstImg li {
 
 .affichcombo {
     left: auto !important;
+}
+
+.owl-item .owl-controls{
+    visibility:hidden;
 }
 /**********************************************/
 
