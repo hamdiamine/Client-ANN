@@ -14,6 +14,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     $scope.ShowMenu = null;
     $scope.showRech = false;
     $scope.showDialog = false;
+    $scope.connexion = true;
     $scope.devise = devise;
 
     /*Redirection*/
@@ -48,8 +49,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
         $scope.listAnnP = annonces;
         AnnonceFctr.listAnn = annonces;
+        $scope.connexion = true;
     }, function (msg) {
-        toastr.error(msg, 'Erreur');
+        $scope.connexion = false;
     });
     /**************************************************************************/
 
@@ -59,7 +61,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
             $scope.listAnnP += annonces;
             AnnonceFctr.listAnn = $scope.listAnnP;
+            $scope.connexion = true;
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
         });
     };
@@ -75,7 +79,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
             $scope.listAnnP = annonces;
             AnnonceFctr.listAnn = $scope.listAnnP;
+            $scope.connexion = true;
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
         });
         $scope.ShowMenu = false;
@@ -92,7 +98,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
             $scope.listAnnP = annonces;
             AnnonceFctr.listAnn = $scope.listAnnP;
+            $scope.connexion = true;
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
         });
         $scope.ShowMenu = false;
@@ -118,7 +126,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
                     toastr.success(_suc_opesuc);
                     $scope.showDialog = false;
                     $scope.ShowHideRech();
+                    $scope.connexion = true;
                 }, function (msg) {
+                    $scope.connexion = false;
                     toastr.error(msg, 'Erreur');
                 });
             }
@@ -139,7 +149,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
                 RechercheFctr.recherche = recherche;
                 toastr.success(_suc_opesuc);
                 $scope.showDialog = false;
+                $scope.connexion = true;
             }, function (msg) {
+                $scope.connexion = false;
                 toastr.error(msg, 'Erreur');
             });
         }
@@ -154,7 +166,9 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
             $scope.listAnnP = annonces;
             $scope.ShowHideRech();
+            $scope.connexion = true;
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
             $scope.ShowHideRech();
         });

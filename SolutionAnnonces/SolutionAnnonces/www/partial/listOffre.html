@@ -44,7 +44,7 @@
         </div>
         <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Région</span></span>
         <div class="chosen-container chosen-container-single" style=" width:100%;" title="">
-            <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')">
+            <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')" style="height:35px; font-size:medium">
                 <span>{{selectedRegion.label}}</span>
                 <div>
                     <b></b>
@@ -52,10 +52,10 @@
             </a>
             <div class="chosen-drop" id="listReg">
                 <div class="chosen-search">
-                    <input type="text" autocomplete="off" class="" ng-model="rechRegion">
+                    <input type="text" autocomplete="off" class="" ng-model="rechRegion" style="height:35px; font-size:medium">
                 </div>
                 <ul class="chosen-results">
-                    <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}">{{rg.label}}</li>
+                    <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}" style="height:35px; font-size:medium">{{rg.label}}</li>
                 </ul>
             </div>
         </div>
@@ -65,7 +65,7 @@
         </div>
         <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
         <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
-            <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')">
+            <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')" style="height:35px; font-size:medium">
                 <span>{{selectedCategorie.label}}</span>
                 <div>
                     <b></b>
@@ -73,10 +73,10 @@
             </a>
             <div class="chosen-drop" id="listCat">
                 <div class="chosen-search">
-                    <input type="text" autocomplete="off" class="" ng-model="rechCategorie">
+                    <input type="text" autocomplete="off" class="" ng-model="rechCategorie" style="height:35px; font-size:medium">
                 </div>
                 <ul class="chosen-results">
-                    <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}">{{ct.label}}</li>
+                    <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}" style="height:35px; font-size:medium">{{ct.label}}</li>
                 </ul>
             </div>
         </div>
@@ -126,6 +126,12 @@
                 </li>
             </ul>
         </div>
+    </div>
+    <div class="deconnecter" ng-show="!connexion">
+        <center style="font-size:small">Problème de connexion</center>
+    </div>
+    <div class="connecter" ng-show="false">
+        <center style="font-size:small">Connexion établie</center>
     </div>
 </div>
 <div class="listAnnonce">

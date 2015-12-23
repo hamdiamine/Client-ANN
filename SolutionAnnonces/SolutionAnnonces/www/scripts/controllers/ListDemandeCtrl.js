@@ -1,4 +1,5 @@
 ﻿app.controller('ListDemandeCtrl', function ($scope) {
+    $scope.connexion = true;
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
         $scope = $scope || angular.element(document).scope();

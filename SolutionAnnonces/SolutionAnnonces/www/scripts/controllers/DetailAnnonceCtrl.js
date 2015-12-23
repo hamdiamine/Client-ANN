@@ -1,10 +1,12 @@
 ﻿/*Controlleur de la page détails annonce*/
 app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $cordovaContacts, $cordovaEmailComposer, AnnonceFctr, PhotoFctr, CompteFctr, toastr) {
     $scope.selectedAnnonce = AnnonceFctr.selectedAnnonce;
+    $scope.photoZoom = {};
     $scope.photos = [];
     $scope.showMenu = false;
     $scope.showDialog = false;
     $scope.showZoom = false;
+    $scope.connexion = true;
     $scope.devise = devise;
     $scope.compte = CompteFctr.compte;
     $scope.contact = {
@@ -24,29 +26,18 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
     };
 
     /*Recuperation de la liste des photo de l'annonce*/
-    /*
-    PhotoFctr.ListSelonAnn($scope.selectedAnnonce.id).then(function (listPhoto) {
-        $scope.photos = listPhoto;
-    }, function (msg) {
-        toastr.error(msg, 'Erreur');
-    });
-    */
-    /*Pour test*/
-    $scope.photos = [
-        {
-            uri: 'http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$',
-            num: 1
-        },
-        {
-            uri: 'http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$',
-            num: 2
-        },
-        {
-            uri: 'http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$',
-            num: 3
-        }
-    ];
-    /*******************************************************************************/
+    if ($scope.selectedAnnonce.photos === undefined) {
+        PhotoFctr.ListSelonAnn($scope.selectedAnnonce.id).then(function (listPhoto) {
+            $scope.photos = listPhoto;
+            $scope.connexion = true;
+        }, function (msg) {
+            $scope.connexion = false;
+        });
+    }
+    else {
+        $scope.photos = $scope.selectedAnnonce
+    }
+    /****************************************************************************************/
 
     /*Initialise carousel pour ngrepeat*/
     $scope.carouselInitializer = function () {
@@ -83,7 +74,9 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
                 toastr.success(_suc_opesuc);
                 $scope.ShowHideDialog();
             }
+            $scope.connexion = true;
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
             $scope.ShowHideDialog();
         });
@@ -135,7 +128,7 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
         }, function () {
             toastr("Service mailing de l'appareil n'est pas valable")
         });
-        
+
     }
     /****************************************************************************/
 
@@ -152,8 +145,15 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
     };
     /******************************************************************************/
 
-    /*Affiche hide zoom*/
-    $scope.ShowHideZoom = function () {
+    /*Affiche zoom*/
+    $scope.ShowZoom = function (photo) {
+        $scope.showZoom = !$scope.showZoom;
+        $scope.photoZoom = photo;
+    }
+    /******************************************************************************/
+
+    /*Hide zoom*/
+    $scope.HideZoom = function () {
         $scope.showZoom = !$scope.showZoom;
     }
     /******************************************************************************/

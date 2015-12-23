@@ -12,6 +12,7 @@
     $scope.sortType = 0;
     $scope.showRech = false;
     $scope.showBtn = true;
+    $scope.connexion = true;
     $scope.regions = RegionFctr.regions;
     $scope.categories = CategorieFctr.categories;
 
@@ -51,7 +52,9 @@
         AnnonceFctr.ListoffreP($scope.page).then(function (anns) {
             $scope.listAnn = anns;
             $scope.ShowHideRech();
+            $scope.connexion = true;;
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
             $scope.ShowHideRech();
         });

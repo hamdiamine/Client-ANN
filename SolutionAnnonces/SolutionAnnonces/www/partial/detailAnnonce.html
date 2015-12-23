@@ -1,6 +1,6 @@
-﻿<nav class="menuRech" ng-class="{actived:showZoom}" ng-click="ShowHideZoom()" style="background: rgba(0,0,0,.3);">
+﻿<nav class="menuRech" ng-class="{actived:showZoom}" ng-click="HideZoom()" style="background: rgba(0,0,0,.3);">
     <center>
-        <img src="http://images.samsung.com/is/image/samsung/fr_GT-I9300MBDVGF_301_Front?$TM-Gallery$" style="width:auto ;height:auto;">
+        <img src="{{photoZoom.uri}}" style="width:auto ;height:auto;">
     </center>
 
 </nav>
@@ -48,12 +48,18 @@
                 </ul>
             </div>
         </div>
+        <div class="deconnecter" ng-show="!connexion">
+            <center style="font-size:small">Problème de connexion</center>
+        </div>
+        <div class="connecter" ng-show="false">
+            <center style="font-size:small">Connexion établie</center>
+        </div>
     </div>
     <div class="detailsAnnonce">
         <div class="form-group">
             <span class="glyphicon glyphicon-picture iconTitre" aria-hidden="true"><span class="titre">Images</span></span>
             <div id="owl-demo" class="owl-carousel owl-theme effet2">
-                <div class="item" ng-repeat="ph in photos" ng-repeat-owl-carousel carousel-init="carouselInitializer" ng-click="ShowHideZoom()">
+                <div class="item" ng-repeat="ph in photos" ng-repeat-owl-carousel carousel-init="carouselInitializer" ng-click="ShowZoom(ph)">
                     <img src="{{ph.uri}}" class="img-thumbnail" style="width:115px ;height:115px">
                 </div>
             </div>

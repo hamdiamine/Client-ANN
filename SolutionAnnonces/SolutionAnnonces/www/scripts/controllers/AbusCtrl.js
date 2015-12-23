@@ -3,6 +3,7 @@ app.controller('AbusCtrl', function ($scope, AbusFctr, AnnonceFctr, MotifAbusFct
     $scope.selectedMotif = {};
     $scope.abus = { annonce: { id: AnnonceFctr.selectedAnnonce.id } };
     $scope.motifs = MotifAbusFctr.motifs;
+    $scope.connexion=true;
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -28,8 +29,10 @@ app.controller('AbusCtrl', function ($scope, AbusFctr, AnnonceFctr, MotifAbusFct
     $scope.CreateAbus = function () {
         AbusFctr.Create($scope.abus).then(function (nvlAbus) {
             $scope.abus = nvlAbus;
+            $scope.connexion = true;
             toastr.success(_suc_opesuc);
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
         });
         $scope.changeRoute("#/detailAnnonce");

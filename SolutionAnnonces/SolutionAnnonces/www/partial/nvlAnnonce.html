@@ -1,5 +1,4 @@
-﻿
-<form id="formNvlAnnonce" ng-submit="createAnnonce()">
+﻿<form id="formNvlAnnonce" ng-submit="createAnnonce()">
     <div class="nvlAnn">
         <div class="headPanel headnvl">
             <div class="contentPanel">
@@ -13,16 +12,14 @@
                     Nouvelle annonce
                 </div>
                 <div class="rightPanel">
-                    <!--
-                    <ul>
-                        <li>
-                            <a class="btnMenu" ng-click="RafraichGeo()">
-                                <img src="images/ic_action_web_site.png" />
-                            </a>
-                        </li>
-                    </ul>
-                        -->
+
                 </div>
+            </div>
+            <div class="deconnecter" ng-show="!connexion">
+                <center style="font-size:small">Problème de connexion</center>
+            </div>
+            <div class="connecter" ng-show="false">
+                <center style="font-size:small">Connexion établie</center>
             </div>
         </div>
         <div>
@@ -52,7 +49,7 @@
                 <div class="form-group required">
                     <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Catégorie</span></span>
                     <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
-                        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')">
+                        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listCat')" style="height:35px; font-size:medium">
                             <span>{{selectedCategorie.label}}</span>
                             <input value="{{selectedCategorie.label}}" required style="display:none" />
                             <div>
@@ -61,10 +58,10 @@
                         </a>
                         <div class="chosen-drop" id="listCat">
                             <div class="chosen-search">
-                                <input type="text" autocomplete="off" class="" ng-model="rechCategorie">
+                                <input type="text" autocomplete="off" class="" ng-model="rechCategorie" style="height:35px; font-size:medium">
                             </div>
                             <ul class="chosen-results">
-                                <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}">{{ct.label}}</li>
+                                <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}" style="height:35px; font-size:medium">{{ct.label}}</li>
                             </ul>
                         </div>
                     </div>
@@ -88,7 +85,7 @@
                 <div class="form-group required">
                     <span class="glyphicon glyphicon-screenshot iconTitre" aria-hidden="true"><span class="titre">Ville</span></span>
                     <div class="chosen-container chosen-container-single" style="width: 100%;" title="">
-                        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listVil')">
+                        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listVil')" style="height:35px; font-size:medium">
                             <span>{{selectedVille.label}}</span>
                             <input value="{{selectedVille.label}}" required style="display:none" />
                             <div>
@@ -97,10 +94,10 @@
                         </a>
                         <div class="chosen-drop" id="listVil">
                             <div class="chosen-search">
-                                <input type="text" autocomplete="off" class="" ng-model="rechVille">
+                                <input type="text" autocomplete="off" class="" ng-model="rechVille" style="height:35px; font-size:medium">
                             </div>
                             <ul class="chosen-results">
-                                <li ng-repeat="vl in villes | filter:rechVille" ng-click="setVille(vl)" class="active-result" data-option-array-index="{{vl.id}}">{{vl.label}}</li>
+                                <li ng-repeat="vl in villes | filter:rechVille" ng-click="setVille(vl)" class="active-result" data-option-array-index="{{vl.id}}" style="height:35px; font-size:medium">{{vl.label}}</li>
                             </ul>
                         </div>
                     </div>
@@ -119,11 +116,6 @@
                         <input type="radio" name="classRadios" id="classRadios1" value="1" ng-model="nouvelAnnonce.classement" required>
                         Professionnel
                     </label>
-                </div>
-                <div>
-                    <ng-map center="current" zoom="15" style="height:100px;">
-                        <marker position="current" title="Tu es là" optimized="false" centered="true" icon="{ url:'images/me_marker2.ico'}" animation="Animation.BOUNCE"></marker>
-                    </ng-map>
                 </div>
                 <div class="form-group required">
                     <span class="glyphicon glyphicon-user iconTitre" aria-hidden="true"><span class="titre">Pseudo</span></span>

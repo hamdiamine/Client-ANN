@@ -1,4 +1,17 @@
-﻿<div class="headPanel">
+﻿<script type="text/javascript">
+    jQuery(function ($) {
+        /*$('.map').append('<div class="overlay">');*/
+        $('.map area').mouseover(function () {
+            var index = $(this).index();
+            var urlImg = 'url(images/map/' + index + '.png)';
+            $('.map').css('backgroundImage', urlImg);
+        });
+        $('.map').mouseout(function () {
+            $('.map').css('backgroundImage', 'url(images/map/all.png)');
+        });
+    });
+</script>
+<div class="headPanel">
     <div class="contentPanel">
         <div class="leftPanel">
             <a onclick="AfficheMenu()">
@@ -24,12 +37,18 @@
             </ul>
         </div>
     </div>
+    <div class="deconnecter" ng-show="!connexion">
+        <center style="font-size:small">Problème de connexion</center>
+    </div>
+    <div class="connecter" ng-show="false">
+        <center style="font-size:small">Connexion établie</center>
+    </div>
 </div>
 
 <div style="margin:0 auto;width: 60%;" class="fastDropDown">
     <span class="glyphicon glyphicon-tags iconTitre" aria-hidden="true"><span class="titre">Région</span></span>
-    <div class="chosen-container chosen-container-single" style=" width:100%;" title="">
-        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')">
+    <div class="chosen-container chosen-container-single" style="width:100%;" title="">
+        <a class="chosen-single" tabindex="-1" onclick="showHideListCombo('#listReg')" style="height:35px; font-size:medium">
             <span>{{selectedRegion.label}}</span>
             <div>
                 <b></b>
@@ -37,15 +56,45 @@
         </a>
         <div class="chosen-drop" id="listReg">
             <div class="chosen-search">
-                <input type="text" autocomplete="off" class="" ng-model="rechRegion">
+                <input type="text" autocomplete="off" class="" ng-model="rechRegion" style="height:35px; font-size:medium">
             </div>
             <ul class="chosen-results">
-                <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}">{{rg.label}}</li>
+                <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}" style="height:35px; font-size:medium">{{rg.label}}</li>
             </ul>
         </div>
     </div>
 </div>
 <center>
-    <div class="map"></div>
+    <div class="map">
+        <img src="images/map/transparent.png" width="280" height="328" usemap="#MapF" border="0" />
+        <map name="MapF" id="MapF">
+            <area shape="poly" coords="270,61,259,64,252,62,248,64,251,68,254,75,250,79,253,86,250,95,247,100,253,103,253,111,258,110,262,107,262,98,263,89,265,80,268,69,271,65" ng-click="setCodeRegion('0')" />
+            <area shape="poly" coords="72,175,69,198,63,233,56,242,69,252,88,259,96,244,92,237,91,224,118,219,120,203,131,191,124,174,116,173,113,169,105,176,95,186,101,185,87,182,83,188" ng-click="setCodeRegion('1')"/>
+            <area shape="poly" coords="157,137,165,135,178,139,185,149,181,153,181,168,185,179,194,180,197,187,185,198,172,195,165,201,157,195,146,203,145,193,149,181,155,178,151,167,156,159,150,151,150,145,154,140" ng-click="setCodeRegion('2')"/>
+            <area shape="poly" coords="60,39,73,42,76,55,84,52,98,56,105,51,110,69,117,73,120,83,115,88,105,82,99,83,94,79,78,79,69,81,71,74,67,69,68,57" ng-click="setCodeRegion('3')"/>
+            <area shape="poly" coords="173,85,186,100,200,97,205,106,213,110,218,118,213,129,217,137,214,145,206,145,205,152,196,150,188,155,185,151,179,140,165,135,161,118,161,107,166,96,164,91,169,85,165,86" ng-click="setCodeRegion('4')"/>
+            <area shape="poly" coords="12,69,3,73,3,78,9,79,5,82,8,89,3,88,8,96,18,95,27,101,32,101,32,111,39,104,48,111,62,105,68,101,73,100,78,94,78,80,68,78,60,75,43,75,35,68,25,68,22,72" ng-click="setCodeRegion('5')"/>
+            <area shape="poly" coords="119,73,126,72,130,70,140,82,143,88,152,87,154,93,164,92,165,99,161,106,161,118,163,126,164,135,158,137,152,143,150,149,138,147,124,148,119,143,117,132,106,130,100,124,100,110,110,107,116,99,119,92,117,89,119,80" ng-click="setCodeRegion('6')"/>
+            <area shape="poly" coords="211,46,206,50,205,62,204,71,214,80,215,86,221,94,224,99,222,105,215,109,205,105,201,96,186,99,174,84,175,76,172,70,179,64,177,55,186,52,184,45,191,36,198,29,200,40,206,40" ng-click="setCodeRegion('7')"/>
+            <area shape="poly" coords="276,237,277,266,272,288,263,283,258,269,256,255,273,246,266,247,263,250" ng-click="setCodeRegion('8')"/>
+            <area shape="poly" coords="252,111,251,115,249,120,232,141,232,146,226,150,221,147,218,150,214,145,217,134,215,125,217,118,216,108,223,103,227,96,240,97,246,99,252,103" ng-click="setCodeRegion('9')"/>
+            <area shape="poly" coords="104,49,110,67,118,73,129,71,134,61,138,58,138,48,137,43,138,39,130,31,122,37,113,38,105,45" ng-click="setCodeRegion('10')"/>
+            <area shape="poly" coords="138,59,149,60,160,64,167,64,172,69,174,75,174,84,167,86,164,91,155,92,152,87,146,87,141,85,131,70,134,61" ng-click="setCodeRegion('11')"/>
+            <area shape="poly" coords="164,202,172,196,179,197,186,201,189,212,203,214,207,225,201,231,193,239,188,238,173,247,165,253,169,272,156,275,139,274,136,268,145,267,141,263,139,252,134,245,140,241,155,241,170,229,174,222,167,210" ng-click="setCodeRegion('12')"/>
+            <area shape="poly" coords="127,149,149,149,155,158,151,167,154,178,147,183,145,192,137,193,131,191,127,178,123,174,116,173,113,169,119,162,115,154,124,149" ng-click="setCodeRegion('13')"/>
+            <area shape="poly" coords="211,46,220,47,234,48,247,58,256,57,269,61,261,61,250,62,246,65,253,75,249,79,252,90,246,98,238,96,224,97,219,87,215,82,204,70,206,53" ng-click="setCodeRegion('14')"/>
+            <area shape="poly" coords="145,193,146,204,157,196,165,205,173,221,171,228,159,236,155,241,137,241,134,246,141,261,144,267,136,268,113,260,99,264,90,259,95,244,93,236,91,225,117,219,120,204,130,192" ng-click="setCodeRegion('15')"/>
+            <area shape="poly" coords="136,5,150,3,155,6,166,11,169,18,175,20,184,23,190,34,179,32,170,35,161,32,152,28,145,28,135,24,134,11" ng-click="setCodeRegion('16')"/>
+            <area shape="poly" coords="48,112,63,105,73,100,78,95,77,79,93,79,106,83,111,89,117,89,117,96,108,108,101,110,99,124,94,124,80,127,84,135,86,148,79,149,74,147,72,151,58,141,51,130,52,121,58,118,47,117" ng-click="setCodeRegion('17')"/>
+            <area shape="poly" coords="137,25,151,29,162,33,171,34,182,33,190,35,184,44,185,52,177,56,177,66,173,69,166,64,149,60,138,59,138,40,130,32" ng-click="setCodeRegion('18')"/>
+            <area shape="poly" coords="75,147,85,149,86,140,80,127,97,125,101,124,107,130,116,132,119,142,123,148,115,154,118,163,97,183,82,180,77,172,71,166,72,152" ng-click="setCodeRegion('19')"/>
+            <area shape="poly" coords="255,199,253,208,263,215,269,215,273,220,270,228,249,243,250,246,240,250,231,251,205,243,193,240,207,225,203,214,214,214,223,218,225,211,220,206,232,196,239,194,235,187,246,187,254,195" ng-click="setCodeRegion('20')"/>
+            <area shape="poly" coords="221,206,234,196,239,193,235,187,240,185,247,187,255,182,257,175,254,159,248,150,241,146,236,151,231,154,232,147,226,150,221,148,219,150,214,145,206,145,205,153,196,151,188,156,184,151,181,168,184,179,194,181,197,186,184,198,189,211,202,214,213,214,223,216,225,211" ng-click="setCodeRegion('21')"/>
+            <area shape="poly" coords="44,297,54,302,57,297,61,289,65,299,72,301,76,304,85,299,76,306,67,305,62,306,74,321,71,325,67,322,54,309,55,316,49,321,44,315,41,301" ng-click="setCodeRegion('22')"/>
+            <area shape="poly" coords="100,290,103,304,109,312,112,322,124,322,128,325,131,320,124,302,126,298,109,291,104,290" ng-click="setCodeRegion('23')"/>
+            <area shape="poly" coords="155,294,172,303,177,309,169,324,160,325,150,325,155,315,150,305,152,297" ng-click="setCodeRegion('24')"/>
+            <area shape="poly" coords="210,299,217,301,222,308,227,315,224,325,208,324,199,317,194,309,204,299" ng-click="setCodeRegion('25')"/>
+        </map>
+    </div>
 </center>
 

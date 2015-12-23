@@ -3,6 +3,7 @@ app.controller('AuthentificationCtrl', function ($scope, CompteFctr, toastr) {
     $scope.mail = null;
     $scope.mdp = null;
     $scope.compte = CompteFctr.compte;
+    $scope.connexion = true;
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -18,6 +19,7 @@ app.controller('AuthentificationCtrl', function ($scope, CompteFctr, toastr) {
     /*Se connecter*/
     $scope.Connecte = function () {
         CompteFctr.Authentification($scope.mail, $scope.mdp).then(function (compte) {
+            $scope.connexion = true;
             if (compte === null || compte === "") {
                 toastr.error(_err_conn, 'Erreur');
             }
@@ -26,6 +28,7 @@ app.controller('AuthentificationCtrl', function ($scope, CompteFctr, toastr) {
             }
 
         }, function (msg) {
+            $scope.connexion = false;
             toastr.error(msg, 'Erreur');
         });
         $scope.changeRoute("#/");

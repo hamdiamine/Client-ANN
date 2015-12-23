@@ -14,6 +14,7 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
     $scope.showBtnEdit = false;
     $scope.showBtnAdd = true;
     $scope.showRech = false;
+    $scope.connexion = true;
     $scope.selectedCount = 0;
     $scope.mode = 0;
 
@@ -52,8 +53,9 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
     else {
         RechercheFctr.ListSelonCpt($scope.compte).then(function (recherches) {
             $scope.recherches = recherches;
+            $scope.connexion = true;
         }, function (msg) {
-            toastr.error(msg, 'Erreur');
+            $scope.connexion = false;
         });
     };
     /********************************************************************************/
@@ -86,7 +88,9 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
                         RechercheFctr.recherche = recherche;
                         toastr.success(_suc_opesuc);
                         $scope.showDialog = false;
+                        $scope.connexion = true;
                     }, function (msg) {
+                        $scope.connexion = false;
                         toastr.error(msg, 'Erreur');
                     });
                 }
@@ -96,7 +100,9 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
                         RechercheFctr.recherche = recherche;
                         toastr.success(_suc_opesuc);
                         $scope.showDialog = false;
+                        $scope.connexion = true;
                     }, function (msg) {
+                        $scope.connexion = false;
                         toastr.error(msg, 'Erreur');
                     });
                 }
@@ -130,7 +136,9 @@ app.controller('ListRechercheCtrl', function ($scope, RechercheFctr, RegionFctr,
         if (RechercheFctr.recherchesASup.length > 0) {
             RechercheFctr.DeleteEnLot().then(function (data) {
                 avecSuccess = true;
+                $scope.connexion = true;
             }, function (msg) {
+                $scope.connexion = false;
                 avecSuccess = false;
             });
         }

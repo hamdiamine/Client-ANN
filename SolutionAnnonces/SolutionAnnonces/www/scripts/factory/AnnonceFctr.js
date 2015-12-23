@@ -1,4 +1,4 @@
-﻿app.factory('AnnonceFctr', function ($http, $q, $cordovaGeolocation) {
+﻿app.factory('AnnonceFctr', function ($http, $q, $cordovaGeolocation, PhotoFctr) {
     var factory = {
         selectedRegion: {},
         selectedAnnonce: {},
@@ -101,13 +101,24 @@
         /***********************************************************************/
 
         /*Creation d'une annonce*/
-        Create: function (annonce) {
+        Create: function (annonce, photos) {
             annonce.laptitude = factory.lp;
             annonce.longitude = factory.lg;
             var url = urlService + "/annonce/create";
             var deferred = $q.defer();
             $http.post(url, annonce)
                 .success(function (data, status) {
+                    data.photos = [];
+                    for (var i = 0; i < photos.length; i++) {
+                        var ph = photos[i];
+                        ph.annonce = { 'id': data.id };
+                        ph.num = i;
+                        PhotoFctr.UploadPhoto(ph).then(function (nvlPh) {
+                            data.photos.push(nvlPh);
+                        }, function (msg) {
+
+                        });
+                    }
                     deferred.resolve(data);
                 }).error(function (error, status) {
                     deferred.reject(_err_crann);
@@ -179,24 +190,24 @@
 
         /*Changer image fav*/
         ChangerImgFav: function (annonce) {
-        var url = $("#im_" + annonce.id).attr("src");
-        var t2 = url.match("jaime.png");
-        if (t2 === null) {
-            var nvl = url.replace("jaimepas.png", "jaime.png");
-            $("#im_" + annonce.id).attr("src", nvl);
-            factory.listAnnFav.push(annonce);
-        }
-        else {
-            var nvl = url.replace("jaime.png", "jaimepas.png");
-            $("#im_" + annonce.id).attr("src", nvl);
-            for (var i = 0; i < factory.listAnnFav.length; i++) {
-                if (annonce.id === factory.listAnnFav[i].id) {
-                    factory.listAnnFav.splice(i, 1);
-                }
+            var url = $("#im_" + annonce.id).attr("src");
+            var t2 = url.match("jaime.png");
+            if (t2 === null) {
+                var nvl = url.replace("jaimepas.png", "jaime.png");
+                $("#im_" + annonce.id).attr("src", nvl);
+                factory.listAnnFav.push(annonce);
             }
+            else {
+                var nvl = url.replace("jaime.png", "jaimepas.png");
+                $("#im_" + annonce.id).attr("src", nvl);
+                for (var i = 0; i < factory.listAnnFav.length; i++) {
+                    if (annonce.id === factory.listAnnFav[i].id) {
+                        factory.listAnnFav.splice(i, 1);
+                    }
+                }
 
+            }
         }
-    }
         /************************************************************************************************************/
     };
     return factory;

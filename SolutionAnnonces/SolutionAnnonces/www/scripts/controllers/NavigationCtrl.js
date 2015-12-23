@@ -1,5 +1,6 @@
 ﻿/*Cotrolleur pour la navigation a partir du menu gauche*/
 app.controller('NavigationCtrl', function ($scope, AnnonceFctr, toastr) {
+    $scope.connexion = true;
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
         $scope = $scope || angular.element(document).scope();

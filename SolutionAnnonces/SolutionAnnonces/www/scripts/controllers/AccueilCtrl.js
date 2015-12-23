@@ -1,7 +1,8 @@
 ﻿/*Controlleur de la page d'accueil*/
-app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, MotifAbusFctr, toastr) {
+app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, MotifAbusFctr, toastr) {
     $scope.regions = [];
     $scope.selectedRegion = {};
+    $scope.connexion = true;
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -21,33 +22,34 @@ app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr,
 
     /*Recuperation de la liste des categories*/
     CategorieFctr.listAll().then(function (listCat) {
-
+        $scope.connexion = true;
     }, function (msg) {
-        toastr.error(msg, 'Erreur');
+        $scope.connexion = false;
     });
     /*************************************************************************************/
 
     /*Recuperation de la liste des villes*/
     VilleFctr.listAll().then(function (listVil) {
-
+        $scope.connexion = true;
     }, function (msg) {
-        toastr.error(msg, 'Erreur');
+        $scope.connexion = false;
     });
     /*************************************************************************************/
 
     /*Recuperation de la liste des regions*/
     RegionFctr.listAll().then(function (listRg) {
         $scope.regions = listRg;
+        $scope.connexion = true;
     }, function (msg) {
-        toastr.error(msg, 'Erreur');
+        $scope.connexion = false;
     });
     /*************************************************************************************/
 
     /*Recuperation de la liste des motifs*/
     MotifAbusFctr.listAll().then(function (listMt) {
-
+        $scope.connexion = true;
     }, function (msg) {
-        toastr.error(msg, 'Erreur');
+        $scope.connexion = false;
     });
     /*************************************************************************************/
 
@@ -65,4 +67,18 @@ app.controller('AccueilCtrl', function ($scope, $cordovaGeolocation, RegionFctr,
         $scope.changeRoute("#/listOffre");
     };
     /************************************************************************************/
+
+    /*Selection d'une region a travers le combo*/
+    $scope.setCodeRegion = function (code) {
+        var region = null;
+        for (var i = 0; i < $scope.regions.length; i++) {
+            if ($scope.regions[i].code === code) {
+                region = $scope.regions[i];
+                break;
+            }
+        }
+        $scope.setRegion(region);
+    };
+    /************************************************************************************/
+
 });

@@ -1,6 +1,7 @@
 ﻿/*Controlleur de la page liste annonces favoris*/
 app.controller('ListAnnoncesFavCtrl', function ($scope, AnnonceFctr) {
     $scope.listAnn = AnnonceFctr.listAnnFav;
+    $scope.connexion = true;
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {

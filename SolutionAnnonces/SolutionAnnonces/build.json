@@ -1,11 +1,11 @@
 {
-      "android": {
-         "release": {
-             "keystore": "c:\\release.key",
-             "storePassword": "mohamed",
-             "alias": "mohamed",
-             "password" : "mohamed",
-             "keystoreType": ""
-         }
-     }
- }
+  "android": {
+    "release": {
+      "keystore": "d:\\myreleasekey.keystore",
+      "storePassword": "mohamed",
+      "alias": "mohamed",
+      "password": "mohamed",
+      "keystoreType": ""
+    }
+  }
+}

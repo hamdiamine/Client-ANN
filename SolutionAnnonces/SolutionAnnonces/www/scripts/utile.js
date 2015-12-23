@@ -1,6 +1,8 @@
 ﻿/*Variables globales*/
 var urlService = "http://192.168.1.82:8081";
 var devise = "€";
+var photoWidth = 600;
+var photoHeigth = 800;
 /****************************************************************************/
 
 /*Messages*/
