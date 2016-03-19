@@ -4,11 +4,12 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     $scope.Recherche = RechercheFctr.rechercheVide;
     $scope.Recherche.compte = CompteFctr.compte;
     $scope.listAnnP = [];
-    $scope.regions = RegionFctr.regions;
-    $scope.categories = CategorieFctr.categories;
+    $scope.regions = [];
+    $scope.categories = [];
+    //$scope.villes = [];
     $scope.selectedRegion = {};
     $scope.selectedCategorie = {};
-    $scope.page = 0;
+    $scope.page = 1;
     $scope.sortType = 0;
     $scope.showBtn = true;
     $scope.ShowMenu = null;
@@ -16,6 +17,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     $scope.showDialog = false;
     $scope.connexion = true;
     $scope.devise = devise;
+    $scope.showLoading = true;
 
     /*Redirection*/
     $scope.changeRoute = function (url, forceReload) {
@@ -28,6 +30,35 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
         };
     };
     /***************************************************************************/
+
+
+    /*Recuperation de la liste des categories*/
+    CategorieFctr.listAll().then(function (listCat) {
+        $scope.categories = listCat;
+        $scope.connexion = true;
+    }, function (msg) {
+        $scope.connexion = false;
+    });
+    /*************************************************************************************/
+
+    /*Recuperation de la liste des villes*/
+    /*
+    VilleFctr.listAll().then(function (listVil) {
+        $scope.villes = listVil;
+        $scope.connexion = true;
+    }, function (msg) {
+        $scope.connexion = false;
+    });
+    /*************************************************************************************/
+
+    /*Recuperation de la liste des regions*/
+    RegionFctr.listAll().then(function (listRg) {
+        $scope.regions = listRg;
+        $scope.connexion = true;
+    }, function (msg) {
+        $scope.connexion = false;
+    });
+    /*************************************************************************************/
 
     /*Selection d'une region a travers le combo*/
     $scope.setRegion = function (region) {
@@ -47,41 +78,56 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
 
     /*Onload : Recuperation de la liste des offre selon region*/
     AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+        $scope.showLoading = false;
         $scope.listAnnP = annonces;
         AnnonceFctr.listAnn = annonces;
+        $scope.page = $scope.page + 1;
         $scope.connexion = true;
+        
     }, function (msg) {
         $scope.connexion = false;
+        $scope.showLoading = false;
     });
     /**************************************************************************/
 
     /*Cumuler les offres par page lors du scrollbar*/
-    $scope.AddToListOfreP = function () {
-        $scope.page = $scope.page + 1;
-        AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
-            $scope.listAnnP += annonces;
-            AnnonceFctr.listAnn = $scope.listAnnP;
-            $scope.connexion = true;
-        }, function (msg) {
-            $scope.connexion = false;
-            toastr.error(msg, 'Erreur');
-        });
+    $scope.addToListOfreP = function () {
+        if ($scope.page > 1) {
+            $scope.showLoading = true;
+            AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+                $scope.showLoading = false;
+                AnnonceFctr.listAnnP = AnnonceFctr.listAnnP.concat(annonces);
+                AnnonceFctr.listAnn = $scope.listAnnP;
+                $scope.page = $scope.page + 1;
+                $scope.connexion = true;
+            }, function (msg) {
+                $scope.connexion = false;
+                $scope.showLoading = false;
+                toastr.error(msg, 'Erreur');
+            });
+        }
+        
     };
     /*************************************************************************/
 
     /*Sort by date*/
     $scope.ListSortByDate = function () {
-        if (AnnonceFctr.sortType === 1) {
-            AnnonceFctr.sortType = 2;
+        AnnonceFctr.sortType = 0;
+        if (AnnonceFctr.sortOrient === 1) {
+            AnnonceFctr.sortOrient = -1;
         } else {
-            AnnonceFctr.sortType = 1;
+            AnnonceFctr.sortOrient = 1;
         }
+        $scope.showLoading = true;
+        $scope.page = 1;
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.showLoading = false;
             $scope.listAnnP = annonces;
             AnnonceFctr.listAnn = $scope.listAnnP;
             $scope.connexion = true;
         }, function (msg) {
             $scope.connexion = false;
+            $scope.showLoading = false;
             toastr.error(msg, 'Erreur');
         });
         $scope.ShowMenu = false;
@@ -90,17 +136,22 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
 
     /*Sort by prix*/
     $scope.ListSortByPrix = function () {
-        if (AnnonceFctr.sortType === 3) {
-            AnnonceFctr.sortType = 4;
+        AnnonceFctr.sortType = 1;
+        if (AnnonceFctr.sortOrient === 1) {
+            AnnonceFctr.sortOrient = -1;
         } else {
-            AnnonceFctr.sortType = 3;
+            AnnonceFctr.sortOrient = 1;
         }
+        $scope.showLoading = true;
+        $scope.page = 1;
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.showLoading = false;
             $scope.listAnnP = annonces;
             AnnonceFctr.listAnn = $scope.listAnnP;
             $scope.connexion = true;
         }, function (msg) {
             $scope.connexion = false;
+            $scope.showLoading = false;
             toastr.error(msg, 'Erreur');
         });
         $scope.ShowMenu = false;
@@ -120,6 +171,7 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
                 $scope.ShowHideRech();
             }
             else {
+                $scope.showLoading = true;
                 RechercheFctr.Create($scope.Recherche).then(function (recherche) {
                     $scope.Recherche = recherche;
                     RechercheFctr.recherche = recherche;
@@ -127,8 +179,10 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
                     $scope.showDialog = false;
                     $scope.ShowHideRech();
                     $scope.connexion = true;
+                    $scope.showLoading = false;
                 }, function (msg) {
                     $scope.connexion = false;
+                    $scope.showLoading = false;
                     toastr.error(msg, 'Erreur');
                 });
             }
@@ -144,14 +198,17 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
             toastr.error(_err_titrerech);
         }
         else {
+            $scope.showLoading = true;
             RechercheFctr.Update($scope.Recherche).then(function (recherche) {
                 $scope.Recherche = recherche;
                 RechercheFctr.recherche = recherche;
                 toastr.success(_suc_opesuc);
                 $scope.showDialog = false;
                 $scope.connexion = true;
+                $scope.showLoading = false;
             }, function (msg) {
                 $scope.connexion = false;
+                $scope.showLoading = false;
                 toastr.error(msg, 'Erreur');
             });
         }
@@ -161,23 +218,29 @@ app.controller('ListOffreCtrl', function ($scope, AnnonceFctr, RechercheFctr, Re
     /*Lancer la recherche*/
     $scope.LancerRecherche = function () {
         AnnonceFctr.selectedRecherche = $scope.Recherche;
-        $scope.page.page = 0;
+        $scope.page = 1;
         AnnonceFctr.sortType = 0;
+        AnnonceFctr.sortOrient = 1;
+        $scope.showLoading = true;
         AnnonceFctr.ListAnnP($scope.page).then(function (annonces) {
+            $scope.showLoading = false;
             $scope.listAnnP = annonces;
+            $scope.page = $scope.page + 1;
+            AnnonceFctr.listAnn = $scope.listAnnP;
             $scope.ShowHideRech();
             $scope.connexion = true;
         }, function (msg) {
             $scope.connexion = false;
+            $scope.showLoading = false;
             toastr.error(msg, 'Erreur');
-            $scope.ShowHideRech();
         });
     };
     /************************************************************************/
 
     /*Naviguer vers la page details offre*/
-    $scope.showDetails = function (annonce) {
+    $scope.showDetails = function (annonce, index) {
         AnnonceFctr.selectedAnnonce = annonce;
+        AnnonceFctr.index = index;
         $scope.changeRoute("#/detailAnnonce");
     };
     /*************************************************************************/

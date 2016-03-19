@@ -1,8 +1,9 @@
 ﻿/*Controlleur de la page nouvelle annonce*/
 app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileTransfer, $cordovaFile, $cordovaGeolocation, AnnonceFctr, CategorieFctr, RegionFctr, VilleFctr, PhotoFctr, toastr) {
     $scope.nouvelAnnonce = { "etat": 0 };
-    $scope.categories = CategorieFctr.categories;
-    $scope.villes = VilleFctr.villes;
+    $scope.categories = [];
+    $scope.villes = [];
+    $scop.regions = [];
     $scope.selectedCategorie = {};
     $scope.selectedVille = {};
     $scope.inc = 0;
@@ -10,6 +11,7 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     $scope.geo = [AnnonceFctr.lp, AnnonceFctr.lg];
     $scope.photos = [];
     $scope.connexion = true;
+    $scope.showApercus = false;
 
     /*Initialise carousel pour ngrepeat*/
     $scope.carouselInitializer = function () {
@@ -52,6 +54,33 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     };
     /*************************************************************************************/
 
+    /*Recuperation de la liste des categories*/
+    CategorieFctr.listAll().then(function (listCat) {
+        $scope.categories = listCat;
+        $scope.connexion = true;
+    }, function (msg) {
+        $scope.connexion = false;
+    });
+    /*************************************************************************************/
+
+    /*Recuperation de la liste des villes*/
+    VilleFctr.listAll().then(function (listVil) {
+        $scope.villes = listVil;
+        $scope.connexion = true;
+    }, function (msg) {
+        $scope.connexion = false;
+    });
+    /*************************************************************************************/
+
+    /*Recuperation de la liste des regions*/
+    RegionFctr.listAll().then(function (listRg) {
+        $scope.regions = listRg;
+        $scope.connexion = true;
+    }, function (msg) {
+        $scope.connexion = false;
+    });
+    /*************************************************************************************/
+
     /*Selection d'une categarie depuis le combo*/
     $scope.setCategorie = function (categorie) {
         $scope.selectedCategorie = categorie;
@@ -64,15 +93,11 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
     $scope.setVille = function (ville) {
         $scope.selectedVille = ville;
         $scope.nouvelAnnonce.ville = ville;
-        $scope.nouvelAnnonce.region = ville.region;
-        if ($scope.nouvelAnnonce.region === null) {
-            RegionFctr.getByVil(ville.id).then(function (rg) {
-                $scope.nouvelAnnonce.region = rg;
-                $scope.connexion = true;
-            }, function (msg) {
-                $scope.connexion = false;
-                toastr.error(msg, 'Erreur');
-            });
+        var i;
+        for (i = 0; i < RegionFctr.regions.length; pas++) {
+            if (RegionFctr.regions[i]._id === ville.regid) {
+                $scope.nouvelAnnonce.region = region;
+            }
         }
         showHideListCombo('#listVil');
     };
@@ -80,10 +105,12 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
 
     /*Validation de la creation d'une annonce*/
     $scope.createAnnonce = function () {
-        AnnonceFctr.Create($scope.nouvelAnnonce, $scope.photos).then(function (nvlAnn) {
+        $scope.nouvelAnnonce.photos = $scope.photos;
+        AnnonceFctr.Create($scope.nouvelAnnonce).then(function (nvlAnn) {
             $scope.nouvelAnnonce = nvlAnn;
             AnnonceFctr.selectedAnnonce = nvlAnn;
             toastr.success(_suc_opesuc);
+            $scope.changeRoute("#/detailAnnonce");
             $scope.connexion = true;
         }, function (msg) {
             $scope.connexion = false;
@@ -121,8 +148,14 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
             options.sourceType = Camera.PictureSourceType.PHOTOLIBRARY;
         }
         $cordovaCamera.getPicture(options).then(function (imageData) {
-            $scope.newImg = {};
-            $scope.newImg = {'uri': "data:image/jpeg;base64," + imageData};
+            $scope.newImg = { num: $scope.photos.length+1};
+            $scope.newImg = { 'uri': "data:image/jpeg;base64," + imageData };
+            if ($scope.photos.length === 0) {
+                $scope.newImg.princ = 1;
+            }
+            else {
+                $scope.newImg.princ = 0;
+            }
             $scope.photos.push($scope.newImg);
 
         }, function (err) {
@@ -130,4 +163,10 @@ app.controller('NvlAnnonceCtrl', function ($scope, $cordovaCamera, $cordovaFileT
         });
     };
     /******************************************************************************************************/
+
+    /*Afficher le popup de l'aperçus*/
+    $scope.showHideApercus = function () {
+        $scope.showApercus = !$scope.showApercus;
+    }
+    /***************************************************************************************************/
 });

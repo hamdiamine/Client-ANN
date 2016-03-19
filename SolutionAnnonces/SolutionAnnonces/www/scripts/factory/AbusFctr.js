@@ -3,7 +3,7 @@
 
         /*Creation d'un abus*/
         Create: function (abus) {
-            var url = urlService + "/abus/create";
+            var url = urlService + "/createabus";
             var deferred = $q.defer();
             $http.post(url, abus)
                 .success(function (data, status) {

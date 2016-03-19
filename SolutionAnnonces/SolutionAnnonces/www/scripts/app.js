@@ -1,4 +1,4 @@
-﻿var app = angular.module('app', ['ngRoute', 'ngCordova', 'ngAnimate', 'toastr', 'ocNgRepeat']);
+﻿var app = angular.module('app', ['ngRoute', 'ngCordova', 'ngAnimate', 'toastr', 'ocNgRepeat', 'infinite-scroll', 'mobile-angular-ui', 'mobile-angular-ui.gestures']);
 
 /*Centre dispatching des pages de l'application*/
 app.config(function ($routeProvider) {

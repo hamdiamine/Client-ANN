@@ -4,7 +4,7 @@
 
         /*Authentification*/
         Authentification: function (mail, passwd) {
-            var url = urlService + "/compte/authentification";
+            var url = urlService + "/authentification";
             var config = {
                 params: { login: mail, mdp: passwd }
             };

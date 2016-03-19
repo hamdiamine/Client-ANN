@@ -23,16 +23,16 @@
 <div class="listAnnonce">
     <ul>
         <li ng-repeat="ann in listAnn" class="effect">
-            <div style="width:90%; float:left" ng-click="showDetails(ann)">
-                <img src="{{ann.imagePrincipal}}">
+            <div style="width:80%; float:left" ng-click="showDetails(ann)">
+                <img src="{{ann.photos[0].uri}}">
                 <h5>{{ann.titre}}</h5>
                 <span class="prix">{{ann.prix}}{{devise}} </span>
                 <p>{{ann.categorie.label}}</p>
                 <p>{{ann.ville.label}}</p>
                 <p>{{ann.dateAff}}</p>
             </div>
-            <div style="width:10%; float:right">
-                <img id="im_{{ann.id}}" ng-click="favorisimage(ann)" src="images/jaime.png" style="width:24px;height:24px;float:right" />
+            <div style="width:20%; float:right">
+                <img id="im_{{ann._id}}" ng-click="favorisimage(ann)" src="images/jaime.png" style="width:32px;height:32px;float:right" />
             </div>
         </li>
     </ul>

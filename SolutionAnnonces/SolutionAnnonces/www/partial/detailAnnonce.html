@@ -26,7 +26,7 @@
         <li><a href="#/abus">Signaler</a></li>
     </ul>
 </nav>
-<div class="detailsAnn">
+<div class="detailsAnn scrollable">
     <div class="headPanel" style="position:fixed;z-index:35">
         <div class="contentPanel">
             <div class="leftPanel">
@@ -64,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="coreDetails">
+        <div class="coreDetails scrollable-content section" ui-swipe-left='swiped("LEFT")' ui-swipe-right='swiped("RIGHT")'>
             <span style="color:#959595; font-weight:bold; font-size:12px">{{selectedAnnonce.categorie.label}}</span>
             <div class="row">
                 <div class="col-xs-8">
@@ -78,7 +78,6 @@
             <p style="margin-top:5px; font:900 12px 'Courier New', Courier, monospace;">
                 {{selectedAnnonce.description}}
             </p>
-            <div style="width:inherit; height:125px"></div>
             <p style="margin-bottom:2px">
                 <span class="label label-default" style="font-size:12px">
                     <span class="glyphicon glyphicon-user" aria-hidden="true">

@@ -1,4 +1,7 @@
 ﻿<form id="formNvlAnnonce" ng-submit="createAnnonce()">
+    <nav class="menuRech" ng-class="{actived:showApercus}">
+
+    </nav>
     <div class="nvlAnn">
         <div class="headPanel headnvl">
             <div class="contentPanel">
@@ -61,7 +64,7 @@
                                 <input type="text" autocomplete="off" class="" ng-model="rechCategorie" style="height:35px; font-size:medium">
                             </div>
                             <ul class="chosen-results">
-                                <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}" style="height:35px; font-size:medium">{{ct.label}}</li>
+                                <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct._id}}" style="height:35px; font-size:medium">{{ct.label}}</li>
                             </ul>
                         </div>
                     </div>
@@ -97,7 +100,7 @@
                                 <input type="text" autocomplete="off" class="" ng-model="rechVille" style="height:35px; font-size:medium">
                             </div>
                             <ul class="chosen-results">
-                                <li ng-repeat="vl in villes | filter:rechVille" ng-click="setVille(vl)" class="active-result" data-option-array-index="{{vl.id}}" style="height:35px; font-size:medium">{{vl.label}}</li>
+                                <li ng-repeat="vl in villes | filter:rechVille" ng-click="setVille(vl)" class="active-result" data-option-array-index="{{vl._id}}" style="height:35px; font-size:medium">{{vl.label}}</li>
                             </ul>
                         </div>
                     </div>
@@ -158,5 +161,6 @@
     </div>
     <center>
         <button type="submit" class="btn btn-warning btn-sm">Valider</button>
+        <button class="btn btn-warning btn-sm" style="display:none" ng-click="showHideApercus()">Aperçus</button>
     </center>
 </form>

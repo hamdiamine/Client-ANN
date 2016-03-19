@@ -6,9 +6,11 @@
         type: 0,
         listAnn: [],
         sortType: 0,
+        sortOrient: 1,
         lp: null,
         lg: null,
         listAnnFav: [],
+        index:0,
 
         /*Calcul des limite des coordonnées geo */
         GetLimiteGeo: function (lp, lg, ray) {
@@ -38,7 +40,12 @@
             var url = null;
             var config = {};
             if (factory.selectedRecherche != null) {
-                url = urlService + "/annonce/researchcrt";
+                factory.selectedRecherche.page = p;
+                factory.selectedRecherche.sortType = factory.sortType;
+                factory.selectedRecherche.sortOrient = factory.sortOrient;
+                var tt = JSON.stringify(factory.selectedRecherche)
+                url = urlService + "/rechannonce/" + tt;
+                /*
                 config = {
                     params: {
                         mCle: factory.selectedRecherche.motsCle,
@@ -57,25 +64,29 @@
                         page: p,
                         sort: factory.sortType
                     }
-                };
+                }; */
             }
             else if (factory.selectedRegion != null) {
-                url = urlService + "/annonce/allofrregp";
+                url = urlService + "/offresbyreg/" + factory.selectedRegion._id + "/" + p + "/" + factory.sortType + "/" + factory.sortOrient;
+                /*
                 config = {
                     params: { reg: factory.selectedRegion.id, page: p, sort: factory.sortType }
                 };
+                */
             }
             else {
-                url = urlService + "/annonce/findbytype";
+                url = urlService + "/annoncesbytype/" + factory.type + "/" + p + "/" + factory.sortType + "/" + factory.sortOrient;
+                /*
                 config = {
                     params: { type: factory.type, page: p, sort: factory.sortType }
                 };
+                */
             }
 
             var deferred = $q.defer();
-            $http.get(url, config)
+            $http.get(url)
                 .success(function (data, status) {
-                    deferred.resolve(data.content);
+                    deferred.resolve(data.annonces);
                 }).error(function (error, status) {
                     deferred.reject(_err_listofr);
                 });
@@ -85,10 +96,12 @@
 
         /*Liste des demandes paginée*/
         ListDemandeP: function (p) {
-            var url = urlService + "/annonce/alldemp";
+            var url = urlService + "/demandes/" + p;
+            /*
             var config = {
                 params: { page: p }
             };
+            */
             var deferred = $q.defer();
             $http.get(url, config)
                 .success(function (data, status) {
@@ -101,13 +114,15 @@
         /***********************************************************************/
 
         /*Creation d'une annonce*/
-        Create: function (annonce, photos) {
+        Create: function (annonce) {
             annonce.laptitude = factory.lp;
             annonce.longitude = factory.lg;
-            var url = urlService + "/annonce/create";
+            annonce.archived = 0;
+            var url = urlService + "/addAnn";
             var deferred = $q.defer();
             $http.post(url, annonce)
                 .success(function (data, status) {
+                    /*
                     data.photos = [];
                     for (var i = 0; i < photos.length; i++) {
                         var ph = photos[i];
@@ -119,6 +134,7 @@
 
                         });
                     }
+                    */
                     deferred.resolve(data);
                 }).error(function (error, status) {
                     deferred.reject(_err_crann);
@@ -190,18 +206,18 @@
 
         /*Changer image fav*/
         ChangerImgFav: function (annonce) {
-            var url = $("#im_" + annonce.id).attr("src");
+            var url = $("#im_" + annonce._id).attr("src");
             var t2 = url.match("jaime.png");
             if (t2 === null) {
                 var nvl = url.replace("jaimepas.png", "jaime.png");
-                $("#im_" + annonce.id).attr("src", nvl);
+                $("#im_" + annonce._id).attr("src", nvl);
                 factory.listAnnFav.push(annonce);
             }
             else {
                 var nvl = url.replace("jaime.png", "jaimepas.png");
-                $("#im_" + annonce.id).attr("src", nvl);
+                $("#im_" + annonce._id).attr("src", nvl);
                 for (var i = 0; i < factory.listAnnFav.length; i++) {
-                    if (annonce.id === factory.listAnnFav[i].id) {
+                    if (annonce._id === factory.listAnnFav[i]._id) {
                         factory.listAnnFav.splice(i, 1);
                     }
                 }

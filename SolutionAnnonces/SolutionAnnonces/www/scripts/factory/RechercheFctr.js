@@ -18,7 +18,9 @@
             urgent: false,
             rayon: null,
             laptitude: null,
-            longitude: null
+            longitude: null,
+            prixMin: null,
+            prixMax:null
         },
         /* Recuperation de la liste des recherches selon compte*/
         ListSelonCpt: function (compte) {

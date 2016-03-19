@@ -1,11 +1,11 @@
 ﻿<script type="text/javascript">
     jQuery(function ($) {
-        /*$('.map').append('<div class="overlay">');*/
+        /*$('.map').append('<div class="overlay">');
         $('.map area').mouseover(function () {
             var index = $(this).index();
             var urlImg = 'url(images/map/' + index + '.png)';
             $('.map').css('backgroundImage', urlImg);
-        });
+        });*/
         $('.map').mouseout(function () {
             $('.map').css('backgroundImage', 'url(images/map/all.png)');
         });
@@ -59,7 +59,7 @@
                 <input type="text" autocomplete="off" class="" ng-model="rechRegion" style="height:35px; font-size:medium">
             </div>
             <ul class="chosen-results">
-                <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg.id}}" style="height:35px; font-size:medium">{{rg.label}}</li>
+                <li ng-repeat="rg in regions | filter:rechRegion" ng-click="setRegion(rg)" class="active-result" data-option-array-index="{{rg._id}}" style="height:35px; font-size:medium">{{rg.label}}</li>
             </ul>
         </div>
     </div>

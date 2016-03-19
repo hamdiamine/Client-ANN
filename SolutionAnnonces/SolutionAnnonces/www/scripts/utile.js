@@ -1,5 +1,5 @@
 ﻿/*Variables globales*/
-var urlService = "http://192.168.1.82:8081";
+var urlService = "http://annonces.meteor.com";
 var devise = "€";
 var photoWidth = 600;
 var photoHeigth = 800;

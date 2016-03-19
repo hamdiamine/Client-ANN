@@ -2,13 +2,14 @@
 app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $cordovaContacts, $cordovaEmailComposer, AnnonceFctr, PhotoFctr, CompteFctr, toastr) {
     $scope.selectedAnnonce = AnnonceFctr.selectedAnnonce;
     $scope.photoZoom = {};
-    $scope.photos = [];
+    $scope.photos = $scope.selectedAnnonce.photos;
     $scope.showMenu = false;
     $scope.showDialog = false;
     $scope.showZoom = false;
     $scope.connexion = true;
     $scope.devise = devise;
     $scope.compte = CompteFctr.compte;
+    $scope.index = AnnonceFctr.index;
     $scope.contact = {
         "displayName": AnnonceFctr.selectedAnnonce.pseudo,
         "phoneNumbers": [
@@ -25,7 +26,51 @@ app.controller('DetailAnnonceCtrl', function ($scope, $cordovaSocialSharing, $co
         ]
     };
 
-    /*Recuperation de la liste des photo de l'annonce*/
+    /*la fonction swap*/
+    $scope.swiped = function (direction) {
+        var newIndex = -1;
+        var count = AnnonceFctr.listAnn.length;
+        if (direction === 'LEFT') {
+            newIndex = $scope.index + 1;
+        } else {
+            newIndex = $scope.index - 1;
+        } 
+
+        if (newIndex < count && newIndex > -1)
+        {
+            $scope.selectedAnnonce = AnnonceFctr.listAnn[newIndex];
+            AnnonceFctr.index = newIndex;
+            AnnonceFctr.selectedAnnonce = $scope.selectedAnnonce;
+            $scope.photoZoom = {};
+            $scope.photos = $scope.selectedAnnonce.photos;
+            $scope.showMenu = false;
+            $scope.showDialog = false;
+            $scope.showZoom = false;
+            $scope.connexion = true;
+            $scope.devise = devise;
+            $scope.compte = CompteFctr.compte;
+            $scope.index = AnnonceFctr.index;
+            $scope.contact = {
+                "displayName": $scope.selectedAnnonce.pseudo,
+                "phoneNumbers": [
+                    {
+                        "value": $scope.selectedAnnonce.numTel,
+                        "type": "mobile"
+                    }
+                ],
+                "emails": [
+                    {
+                        "value": $scope.selectedAnnonce.email,
+                        "type": "home"
+                    }
+                ]
+            };
+        }
+        
+    };
+    /**********************************************************************/
+
+    /*Recuperation de la liste des photo de l'annonce
     if ($scope.selectedAnnonce.photos === undefined) {
         PhotoFctr.ListSelonAnn($scope.selectedAnnonce.id).then(function (listPhoto) {
             $scope.photos = listPhoto;

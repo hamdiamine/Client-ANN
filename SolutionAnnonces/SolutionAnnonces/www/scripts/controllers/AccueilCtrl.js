@@ -1,5 +1,5 @@
 ﻿/*Controlleur de la page d'accueil*/
-app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, MotifAbusFctr, toastr) {
+app.controller('AccueilCtrl', function ($scope, $timeout, RegionFctr, AnnonceFctr, RechercheFctr, CategorieFctr, VilleFctr, MotifAbusFctr, toastr) {
     $scope.regions = [];
     $scope.selectedRegion = {};
     $scope.connexion = true;
@@ -65,11 +65,16 @@ app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, Recherc
         AnnonceFctr.type = 0;
         AnnonceFctr.sortType = 0;
         $scope.changeRoute("#/listOffre");
+      
+        
     };
     /************************************************************************************/
 
-    /*Selection d'une region a travers le combo*/
+    /*Selection d'une region a travers le map*/
     $scope.setCodeRegion = function (code) {
+        var urlImg = 'url(images/map/' + code + '.png)';
+        $('.map').css('backgroundImage', urlImg);
+
         var region = null;
         for (var i = 0; i < $scope.regions.length; i++) {
             if ($scope.regions[i].code === code) {
@@ -77,6 +82,9 @@ app.controller('AccueilCtrl', function ($scope, RegionFctr, AnnonceFctr, Recherc
                 break;
             }
         }
+
+        $timeout(function () { var i = 0; i = i + 1; }, 3000);
+
         $scope.setRegion(region);
     };
     /************************************************************************************/

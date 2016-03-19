@@ -14,6 +14,11 @@
     <div style="height:100%">
     </div>
 </nav>
+<nav class="menuRech" ng-class="{actived:showLoading}" style="background: rgba(0,0,0,.3);z-index:99">
+    <center style="top:250px">
+        <img src="images/loading.gif" width="64" height="64" />
+    </center>
+</nav>
 <nav class="menuTrie" ng-class="{actived:ShowMenu}">
     <ul class="menuUl">
         <li ng-click="ListSortByPrix()"><a>Trier par prix</a></li>
@@ -28,11 +33,6 @@
     <div style="width:80%; height:inherit; background-color:white; float:right; padding:20px">
         <div class="form-group">
             <input type="text" class="form-control" id="motCle" placeholder="Mot(s) clé(s)" ng-model="Recherche.motsCle">
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" checked="checked" ng-model="Recherche.avecDesc"> Inclure la description dans la recherche
-            </label>
         </div>
         <div class="form-group">
             <label class="checkbox-inline">
@@ -79,6 +79,11 @@
                     <li ng-repeat="ct in categories | filter:rechCategorie" ng-click="setCategorie(ct)" class="active-result" data-option-array-index="{{ct.id}}" style="height:35px; font-size:medium">{{ct.label}}</li>
                 </ul>
             </div>
+        </div>
+        <div class="form-group">
+            <span class="glyphicon glyphicon-euro iconTitre" aria-hidden="true"><span class="titre">Prix</span></span>
+            <input type="number" class="form-control" id="prixMin" placeholder="Minimun" ng-model="Recherche.prixMin">
+            <input type="number" class="form-control" id="prixMax" placeholder="Maximun" ng-model="Recherche.prixMax">
         </div>
         <div class="form-group">
             <label class="checkbox-inline">
@@ -134,19 +139,19 @@
         <center style="font-size:small">Connexion établie</center>
     </div>
 </div>
-<div class="listAnnonce">
+<div class="listAnnonce" infinite-scroll="addToListOfreP()" infinite-scroll-distance="3">
     <ul>
         <li ng-repeat="ann in listAnnP" class="effect">
-            <div style="width:90%; float:left" ng-click="showDetails(ann)">
-                <img src="{{ann.imagePrincipal}}">
+            <div style="width:90%; float:left" ng-click="showDetails(ann, $index)">
+                <img src="{{ann.photos[0].uri}}">
                 <h5>{{ann.titre}}</h5>
                 <span class="prix">{{ann.prix}}{{devise}} </span>
                 <p>{{ann.categorie.label}}</p>
                 <p>{{ann.ville.label}}</p>
-                <p>{{ann.dateAff}}</p>
+                <p>{{ann.createdAt}}</p>
             </div>
             <div style="width:10%; float:right">
-                <img id="im_{{ann.id}}" ng-click="favorisimage(ann)" src="images/jaimepas.png" style="width:24px;height:24px;float:right" />
+                <img id="im_{{ann._id}}" ng-click="favorisimage(ann)" src="images/jaimepas.png" style="width:32px;height:32px;float:right" />
             </div>
         </li>
     </ul>

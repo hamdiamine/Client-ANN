@@ -410,8 +410,8 @@ nav.menu {
 
 nav.menuTrie {
     background-color: #DCDBDB;
-    position: absolute;
-    top: 7px;
+    position: fixed;
+    top: 18px;
     box-sizing: border-box;
     z-index: 20;
     height: auto;
@@ -431,7 +431,7 @@ nav.menuTrie {
 
 /*Menu recherche*/
 nav.menuRech {
-    position: absolute;
+    position: fixed;
     top: 7px;
     box-sizing: border-box;
     z-index: 20;
